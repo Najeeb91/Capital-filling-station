@@ -16,7 +16,7 @@ section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px so
 .panel{display:none}.panel.active{display:block}.back{border:0;background:none;color:var(--blue);font-weight:800;padding:2px 0 12px}.box{border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.label{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:5px}input,select{max-width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:#fff}.btn{width:100%;border:0;border-radius:11px;padding:12px;background:var(--blue);color:#fff;font-weight:800;margin-top:10px}.greenbtn{background:var(--green)}.note{font-size:11px;color:var(--muted);line-height:1.45}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:7px 3px;border-bottom:1px solid var(--line);text-align:right}.table th:first-child,.table td:first-child{text-align:left}
 .bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid var(--line);z-index:10}.bottom button{border:0;background:#fff;padding:8px 2px;color:#667085;font-size:10px}.bottom button span{display:block;font-size:20px}.bottom .active{color:var(--blue);font-weight:800}
 .toast{display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:9px 14px;border-radius:9px;font-size:12px;z-index:20}
-</style>
+.nozEdit{width:86px;padding:7px!important;border:1px solid var(--line);border-radius:8px;background:#fff}</style>
 </head>
 <body><div class="app">
 <header><div class="head"><div class="menu">☰</div><div style="text-align:center"><div class="brand">CAPITAL FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
@@ -59,13 +59,22 @@ section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px so
 
 <div id="settings" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Fuel Settings</h2>
 <div class="box">
-<b>Edit Nozzle Readings</b>
-<p class="note">Edit existing HSD/MS opening and closing meter readings when a correction is required. No delete option.</p>
-<div class="grid2">
-<div><div class="label">HSD CLOSING READING</div><input id="editHsdClosing" type="number" step="0.01"></div>
-<div><div class="label">MS CLOSING READING</div><input id="editMsClosing" type="number" step="0.01"></div>
+<b>Nozzle Management</b>
+<p class="note">Fuel type is shown separately. Nozzles are always numbered N1, N2, N3… Edit existing readings here; there is no delete option.</p>
+
+<div class="box" style="margin:10px 0 0">
+<b>HSD — Edit Existing Readings</b>
+<table class="table"><thead><tr><th>Nozzle</th><th>Opening</th><th>Closing</th></tr></thead>
+<tbody id="editHsdNozzles"></tbody></table>
 </div>
-<button class="btn" onclick="editNozzleSettings()">Save Nozzle Reading</button>
+
+<div class="box" style="margin:10px 0 0">
+<b>MS — Edit Existing Readings</b>
+<table class="table"><thead><tr><th>Nozzle</th><th>Opening</th><th>Closing</th></tr></thead>
+<tbody id="editMsNozzles"></tbody></table>
+</div>
+
+<button class="btn" onclick="saveAllNozzleReadings()">Save Nozzle Readings</button>
 </div>
 
 <div class="box">
@@ -97,35 +106,94 @@ section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px so
 <div id="toast" class="toast"></div></div>
 <script>
 const today=new Date().toISOString().slice(0,10);
-let S=JSON.parse(localStorage.getItem('capitalFuel')||'null')||{rate:{h:89.45,m:96.35},open:{h:10218,m:13556.3},pur:{h:5000,m:5000},sale:{h:2000,m:3600},nat:{h:0,m:0},n:{h:2,m:2}};
+let S=JSON.parse(localStorage.getItem('capitalFuel')||'null')||{rate:{h:89.45,m:96.35},open:{h:10218,m:13556.3},pur:{h:5000,m:5000},sale:{h:2000,m:3600},nat:{h:0,m:0},n:{h:2,m:2},readings:{h:[],m:[]}};
 const money=x=>'₹'+Number(x).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
 const q=x=>Number(x).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
-const close=k=>{
-  const manual=k==='h'?S.manualCloseH:S.manualCloseM;
-  return Number.isFinite(manual)?manual:S.open[k]+S.pur[k]-S.sale[k]+S.nat[k];
-};
+const close=k=>S.open[k]+S.pur[k]-S.sale[k]+S.nat[k];
 function save(){localStorage.setItem('capitalFuel',JSON.stringify(S))}
 function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1600)}
 function show(id,btn){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');render()}
 function render(){
 hm.textContent=money(S.sale.h*S.rate.h);mm.textContent=money(S.sale.m*S.rate.m);hq.textContent=q(S.sale.h)+' Ltr';mq.textContent=q(S.sale.m)+' Ltr';
 hs.textContent=q(close('h'));ms.textContent=q(close('m'));osH.textContent=q(S.sale.h)+' Ltr';osM.textContent=q(S.sale.m)+' Ltr';opH.textContent=q(S.pur.h)+' Ltr';opM.textContent=q(S.pur.m)+' Ltr';rev.textContent=money(S.sale.h*S.rate.h+S.sale.m*S.rate.m);
-rh.value=S.rate.h;rm.value=S.rate.m;hr.value=S.rate.h;mr.value=S.rate.m;ho2.value=S.open.h;mo2.value=S.open.m;hc2.value=S.n.h;mc2.value=S.n.m;editHsdClosing.value=Number.isFinite(S.manualCloseH)?S.manualCloseH:close('h');editMsClosing.value=Number.isFinite(S.manualCloseM)?S.manualCloseM:close('m');editHsdStock.value=S.open.h;editMsStock.value=S.open.m;
+rh.value=S.rate.h;rm.value=S.rate.m;hr.value=S.rate.h;mr.value=S.rate.m;ho2.value=S.open.h;mo2.value=S.open.m;hc2.value=S.n.h;mc2.value=S.n.m;
 ho.textContent=q(S.open.h);hp.textContent=q(S.pur.h);hs2.textContent=q(S.sale.h);hc.textContent=q(close('h'));mo.textContent=q(S.open.m);mp.textContent=q(S.pur.m);ms2.textContent=q(S.sale.m);mc.textContent=q(close('m'));renderNozzles()}
-function renderNozzles(){let make=k=>{let rows='',n=S.n[k],sold=S.sale[k]/n;for(let i=1;i<=n;i++){let o=10000+(i-1)*500;rows+=`<tr><td>N${i}</td><td>${o.toFixed(2)}</td><td>${(o+sold).toFixed(2)}</td><td>${sold.toFixed(2)}</td></tr>`}return rows};hn.innerHTML=make('h');mn.innerHTML=make('m')}
-function saveNozzle(){S.nat.h=+nh.value;S.nat.m=+nm.value;save();toast('Nozzle reading updated');render()}
+function ensureNozzleData(){
+  ['h','m'].forEach(k=>{
+    if(!Array.isArray(S.readings?.[k])) {
+      S.readings = S.readings || {};
+      S.readings[k] = [];
+    }
+    const n=S.n[k]||1;
+    while(S.readings[k].length<n){
+      const i=S.readings[k].length;
+      const opening=(k==='h'?S.open.h:S.open.m)+(i*500);
+      S.readings[k].push({opening,closing:opening});
+    }
+    S.readings[k]=S.readings[k].slice(0,n);
+  });
+}
+function renderNozzles(){
+  ensureNozzleData();
+  const make=k=>{
+    return S.readings[k].map((r,i)=>`<tr>
+      <td>N${i+1}</td>
+      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="opening" type="number" step="0.01" value="${Number(r.opening).toFixed(2)}"></td>
+      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="closing" type="number" step="0.01" value="${Number(r.closing).toFixed(2)}"></td>
+    </tr>`).join('');
+  };
+  hn.innerHTML=make('h'); mn.innerHTML=make('m');
+
+  const editMake=k=>{
+    return S.readings[k].map((r,i)=>`<tr>
+      <td>N${i+1}</td>
+      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="opening" type="number" step="0.01" value="${Number(r.opening).toFixed(2)}"></td>
+      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="closing" type="number" step="0.01" value="${Number(r.closing).toFixed(2)}"></td>
+    </tr>`).join('');
+  };
+  editHsdNozzles.innerHTML=editMake('h');
+  editMsNozzles.innerHTML=editMake('m');
+
+  if(addNozzleName) addNozzleName.value='N'+((S.n[addNozzleFuel.value]||0)+1);
+}
+function saveAllNozzleReadings(){
+  ensureNozzleData();
+  document.querySelectorAll('.nozEdit').forEach(el=>{
+    const k=el.dataset.k, i=+el.dataset.i, field=el.dataset.field;
+    const v=Number(el.value);
+    if(Number.isFinite(v) && v>=0) S.readings[k][i][field]=v;
+  });
+  // Keep the existing daily sales figure as the station's recorded sale,
+  // while the edited meter readings remain available for verification.
+  save(); toast('Existing nozzle readings updated'); render();
+}
+function saveNozzle(){
+  ensureNozzleData();
+  S.nat.h=+nh.value; S.nat.m=+nm.value;
+  save(); toast('NAT updated'); render();
+}
 function savePurchase(){S.pur.h=+ph.value||0;S.pur.m=+pm.value||0;save();toast('Purchase updated');render()}
 function saveRates(){S.rate.h=+hr.value||0;S.rate.m=+mr.value||0;save();toast('Prices updated');render()}
 function saveOpening(){S.open.h=+ho2.value||0;S.open.m=+mo2.value||0;save();toast('Opening readings saved');render()}
 function addNozzle(){
   const k=addNozzleFuel.value;
-  const name=(addNozzleName.value||'').trim();
-  if(S.n[k]>=10){toast('Maximum 10 nozzles');return}
+  if((S.n[k]||0)>=10){toast('Maximum 10 nozzles');return}
+  S.n[k]=(S.n[k]||0)+1;
+  ensureNozzleData();
+  const i=S.n[k]-1;
+  const opening=(k==='h'?S.open.h:S.open.m)+(i*500);
+  S.readings[k].push({opening,closing:opening});
+  save(); toast((k==='h'?'HSD':'MS')+' N'+S.n[k]+' added'); render();
+}
   S.n[k]=Math.min(10,(S.n[k]||0)+1);
   addNozzleName.value='';
   save(); toast((k==='h'?'HSD':'MS')+' nozzle added'); render();
 }
-function saveConfig(){S.n.h=Math.max(1,Math.min(10,+hc2.value||2));S.n.m=Math.max(1,Math.min(10,+mc2.value||2));save();toast('Nozzle setup saved');render()}
+function saveConfig(){
+  S.n.h=Math.max(1,Math.min(10,+hc2.value||2));
+  S.n.m=Math.max(1,Math.min(10,+mc2.value||2));
+  ensureNozzleData(); save(); toast('Nozzle setup saved'); render();
+}
 function editNozzleSettings(){
   const h=Number(editHsdClosing.value), m=Number(editMsClosing.value);
   if(Number.isFinite(h) && h>=0) S.manualCloseH=h;
