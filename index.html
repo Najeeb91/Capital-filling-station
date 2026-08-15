@@ -3,126 +3,87 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b2554">
-<title>Capital Filling Station — Fuel Management</title>
+<title>Capital Filling Station — Fuel Module</title>
 <style>
-:root{--navy:#0b2554;--blue:#1769da;--green:#159447;--red:#d92d3a;--orange:#d98218;--bg:#f5f7fb;--card:#fff;--muted:#667085;--line:#e4e7ec}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px}
-button,input,select{font:inherit}button{cursor:pointer}.app{min-height:100vh}.top{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);padding:10px 12px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;gap:9px;align-items:center;min-width:0}.logo{width:38px;height:38px;border-radius:11px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:19px;flex:none}.brand b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}.brand span{display:block;font-size:10px;color:var(--green);font-weight:700}.gear{border:1px solid var(--line);background:#fff;border-radius:10px;width:40px;height:40px}
-.layout{max-width:900px;margin:auto}.side{display:none}.main{padding:12px 12px 82px}.view{display:none}.view.active{display:block}.title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:4px 0 12px}.title h1{font-size:21px;margin:0}.sub,.small{color:var(--muted);font-size:12px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:12px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{min-height:82px}.label{font-size:11px;color:var(--muted)}.value{font-size:20px;font-weight:800;margin-top:5px}.petrol{color:#148a42}.diesel{color:#1769da}.warn{color:#b86b00}.green{color:var(--green)}
-.field{display:grid;gap:5px;margin-bottom:9px}.field label{font-size:11px;font-weight:700;color:#475467}.input,.select{width:100%;height:43px;border:1px solid #cfd5dd;border-radius:10px;background:#fff;padding:9px 10px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:800}.primary{background:var(--green);color:#fff}.blue{background:var(--blue);color:#fff}.light{background:#fff;border:1px solid var(--line);color:#344054}.full{width:100%}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:11px}.tabs button{height:42px;border:1px solid var(--line);background:#fff;border-radius:10px;font-weight:800}.tabs .active{background:var(--navy);color:#fff}.nozzle{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:9px;background:#fff}.nozzle-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.nozzle-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.mini{background:#f8fafc;border-radius:9px;padding:8px}.mini b{display:block;font-size:11px;color:#667085}.mini span{font-weight:800}.nat{display:flex;align-items:center;gap:7px}.nat select{flex:1}.calc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}.calc div{background:#f8fafc;border-radius:9px;padding:7px;text-align:center}.calc small{display:block;color:#667085;font-size:9px}.calc b{font-size:12px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.section-head h3{margin:0;font-size:14px}.notice{background:#eef8f1;border:1px solid #c8ebd2;color:#176b35;border-radius:10px;padding:9px;font-size:11px;margin-top:9px}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.quick button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 3px;font-size:11px}.row{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}.pill{display:inline-block;border-radius:999px;padding:4px 7px;font-size:9px;font-weight:800;background:#eef2f6}.success{background:#e9f7ef;color:#08763a}.warning{background:#fff5df;color:#9a5b00}.bottom{position:fixed;bottom:0;left:0;right:0;z-index:40;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:5px 4px calc(5px + env(safe-area-inset-bottom))}.bottom button{border:0;background:#fff;font-size:10px;color:#475467;padding:4px 2px}.bottom button.active{color:var(--green);font-weight:800}.bottom i{font-style:normal;font-size:18px;display:block;line-height:20px}.modal{position:fixed;inset:0;background:rgba(8,20,40,.5);z-index:80;display:none;align-items:flex-end}.modal.open{display:flex}.sheet{width:100%;max-height:86vh;overflow:auto;background:#fff;border-radius:18px 18px 0 0;padding:17px 14px calc(20px + env(safe-area-inset-bottom))}.sheet h2{margin:0 0 12px;font-size:18px}.nat-options{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.nat-options button{padding:11px 4px;border:1px solid var(--line);background:#fff;border-radius:10px}.report{display:grid;gap:7px}.report .row{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px}.lock{font-size:10px;color:var(--muted);margin-top:5px}
-@media(min-width:700px){.main{padding-bottom:30px}.bottom{display:none}.side{display:block;position:fixed;left:0;top:61px;width:210px;height:calc(100vh - 61px);background:#fff;border-right:1px solid var(--line);padding:12px}.layout{margin-left:210px}.nav{display:grid;gap:5px}.nav button{border:0;background:#fff;text-align:left;padding:10px;border-radius:9px}.nav button.active{background:#e9f7ef;color:#08763a;font-weight:800}}
+:root{--blue:#1557d6;--green:#07883b;--orange:#e87512;--purple:#5d32c7;--navy:#071a45;--line:#dfe5ef;--muted:#667085}
+*{box-sizing:border-box}body{margin:0;background:#f6f8fc;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.app{max-width:520px;margin:auto;min-height:100vh;background:#fff}
+header{background:linear-gradient(135deg,#063da9,#125be0);color:#fff;padding:18px;position:sticky;top:0;z-index:5}.head{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;font-size:20px}.sub{font-size:10px;opacity:.85}.menu{font-size:24px}
+main{padding:14px 14px 90px}.filters,.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field,.select{border:1px solid var(--line);border-radius:13px;padding:11px;background:#fff}.field input,.select select{border:0;outline:0;width:100%;background:transparent}
+.sale{color:#fff;border-radius:18px;padding:17px;min-height:145px}.hsd{background:linear-gradient(145deg,#07963f,#087936)}.ms{background:linear-gradient(145deg,#1758da,#123db6)}.sale h3{margin:0 0 14px;font-size:17px}.money{font-size:23px;font-weight:800}.qty{font-size:19px;font-weight:800;margin-top:10px}.stock{border:1px solid var(--line);border-radius:16px;padding:16px;min-height:105px}.stock h4{margin:0 0 12px}.stock.hsd{color:var(--orange);background:#fffaf5}.stock.ms{color:var(--purple);background:#fbf9ff}.num{font-size:21px;font-weight:800}
+section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px solid var(--line);border-radius:16px;padding:13px}.row{padding:11px 0;border-bottom:1px solid #edf0f5;display:flex;justify-content:space-between;gap:10px}.row:last-child{border:0}.green{color:var(--green)}.blue{color:var(--blue)}.purple{color:var(--purple)}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.action{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 4px;font-size:11px;font-weight:700}.action span{display:block;font-size:21px;margin-bottom:6px}
+.settings{margin-top:16px;border:1px solid #bfd1fb;background:#f7faff;border-radius:16px;padding:15px}.settings button{border:0;background:none;width:100%;text-align:left;font-weight:800;color:var(--navy)}
+.panel{display:none}.panel.active{display:block}.back{border:0;background:none;color:var(--blue);font-weight:800;padding:2px 0 12px}.box{border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.label{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:5px}input,select{max-width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:#fff}.btn{width:100%;border:0;border-radius:11px;padding:12px;background:var(--blue);color:#fff;font-weight:800;margin-top:10px}.greenbtn{background:var(--green)}.note{font-size:11px;color:var(--muted);line-height:1.45}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:7px 3px;border-bottom:1px solid var(--line);text-align:right}.table th:first-child,.table td:first-child{text-align:left}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid var(--line);z-index:10}.bottom button{border:0;background:#fff;padding:8px 2px;color:#667085;font-size:10px}.bottom button span{display:block;font-size:20px}.bottom .active{color:var(--blue);font-weight:800}
+.toast{display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:9px 14px;border-radius:9px;font-size:12px;z-index:20}
 </style>
 </head>
-<body>
-<div class="app">
-<header class="top"><div class="brand"><div class="logo">⛽</div><div><b id="stationName">Capital Filling Station</b><span>Fuel Management</span></div></div><button class="gear" onclick="go('settings')">⚙️</button></header>
-<div class="layout">
-<aside class="side"><nav class="nav">
-<button data-view="dashboard" onclick="go('dashboard')">🏠 Dashboard</button>
-<button data-view="nozzle" onclick="go('nozzle')">⛽ Nozzle Reading</button>
-<button data-view="purchase" onclick="go('purchase')">🚚 Purchase</button>
-<button data-view="stock" onclick="go('stock')">📦 Stock</button>
-<button data-view="shifts" onclick="go('shifts')">🕐 Shifts</button>
-<button data-view="reports" onclick="go('reports')">📊 Reports</button>
-<button data-view="reconcile" onclick="go('reconcile')">✓ Reconcile</button>
-<button data-view="settings" onclick="go('settings')">⚙️ Settings</button>
-</nav></aside>
-<main class="main">
-
-<section id="dashboard" class="view active">
-<div class="title"><div><h1>Dashboard</h1><div class="sub">Daily fuel control</div></div><span class="pill success">● Ready</span></div>
-<div class="cards">
-<div class="card metric"><div class="label">Petrol Net Sale</div><div class="value petrol" id="dPetrol">0 L</div></div>
-<div class="card metric"><div class="label">Diesel Net Sale</div><div class="value diesel" id="dDiesel">0 L</div></div>
-<div class="card metric"><div class="label">NAT Today</div><div class="value warn" id="dNat">0 L</div></div>
-<div class="card metric"><div class="label">Estimated Stock</div><div class="value" id="dStock">0 L</div></div>
-</div>
-<div class="card"><div class="section-head"><h3>Retail Price</h3><span class="small">Current</span></div><div class="formgrid"><div><b class="petrol">Petrol</b><div id="dPP" class="value">₹0</div></div><div><b class="diesel">Diesel</b><div id="dDP" class="value">₹0</div></div></div></div>
-<div class="card"><div class="section-head"><h3>Quick Actions</h3></div><div class="quick"><button onclick="go('nozzle')">⛽<br>Fuel</button><button onclick="go('purchase')">🚚<br>Purchase</button><button onclick="go('stock')">📦<br>Stock</button><button onclick="go('reports')">📊<br>Reports</button></div></div>
-<div class="notice">No individual fuel-sale entry. Closing reading → automatic sale → NAT adjustment → stock.</div>
-</section>
-
-<section id="nozzle" class="view">
-<div class="title"><div><h1>Nozzle Reading</h1><div class="sub">Enter closing only</div></div><button class="btn light" onclick="go('settings')">⚙️</button></div>
-<div class="card"><div class="formgrid"><div class="field"><label>Date</label><input id="rDate" class="input" type="date"></div><div class="field"><label>Shift</label><select id="rShift" class="select"><option>24 Hours</option><option>Morning</option><option>Evening</option><option>Night</option></select></div></div></div>
-<div class="card"><div class="tabs"><button id="ptab" class="active" onclick="fuelTab('petrol')">Petrol</button><button id="dtab" onclick="fuelTab('diesel')">Diesel</button></div><div id="petrolBox"></div><div id="dieselBox" style="display:none"></div><button class="btn primary full" onclick="saveReadings()">Save / Update Closing</button></div>
-</section>
-
-<section id="purchase" class="view">
-<div class="title"><div><h1>Stock Purchase</h1><div class="sub">Incoming fuel</div></div></div>
-<div class="card"><div class="formgrid">
-<div class="field"><label>Date</label><input id="pDate" class="input" type="date"></div><div class="field"><label>Fuel</label><select id="pFuel" class="select"><option>Petrol</option><option>Diesel</option></select></div>
-<div class="field"><label>Supplier</label><input id="pSupplier" class="input" placeholder="Name"></div><div class="field"><label>Quantity (L)</label><input id="pQty" class="input" type="number" step=".01"></div>
-<div class="field"><label>Buy Rate (₹/L)</label><input id="pRate" class="input" type="number" step=".01"></div><div class="field"><label>Invoice / Ref.</label><input id="pRef" class="input" placeholder="Optional"></div>
-</div><button class="btn primary full" onclick="addPurchase()">Save Purchase</button><div class="lock">Purchase records are retained; no delete.</div></div>
-<div class="card"><div class="section-head"><h3>Recent Purchases</h3></div><div id="pList"></div></div>
-</section>
-
-<section id="stock" class="view">
-<div class="title"><div><h1>Stock Summary</h1><div class="sub">Automatic</div></div></div>
-<div class="cards"><div class="card"><b class="petrol">Petrol</b><div id="sPetrol" class="value">0 L</div><div class="small">Estimated closing</div></div><div class="card"><b class="diesel">Diesel</b><div id="sDiesel" class="value">0 L</div><div class="small">Estimated closing</div></div></div>
-<div class="card"><div class="row"><span>Formula</span><b>Opening + Purchase − Net Sale</b></div><div class="notice">NAT is already added back because tested fuel returns to the tank.</div></div>
-</section>
-
-<section id="shifts" class="view">
-<div class="title"><div><h1>Shift</h1><div class="sub">Choose once for the current operation</div></div></div>
-<div class="cards"><button class="card" onclick="pickShift('24 Hours')"><b>24 Hours</b><div class="small">06:00–06:00</div></button><button class="card" onclick="pickShift('Morning')"><b>Morning</b><div class="small">06:00–14:00</div></button><button class="card" onclick="pickShift('Evening')"><b>Evening</b><div class="small">14:00–22:00</div></button><button class="card" onclick="pickShift('Night')"><b>Night</b><div class="small">22:00–06:00</div></button></div>
-<div class="card">Current: <b id="curShift">24 Hours</b></div>
-</section>
-
-<section id="reports" class="view">
-<div class="title"><div><h1>Reports</h1><div class="sub">Day • Month • Custom</div></div></div>
-<div class="card"><div class="formgrid"><div class="field"><label>From</label><input id="from" class="input" type="date"></div><div class="field"><label>To</label><input id="to" class="input" type="date"></div></div><div style="display:flex;gap:7px"><button class="btn light" onclick="range('today')">Today</button><button class="btn light" onclick="range('month')">Month</button><button class="btn blue" onclick="renderReports()">View</button></div></div>
-<div class="report"><div class="row"><span>Fuel Sales</span><b id="rpSales">0 L</b></div><div class="row"><span>Purchases</span><b id="rpPurchase">₹0</b></div><div class="row"><span>Stock</span><b id="rpStock">0 L</b></div><div class="row"><span>NAT</span><b id="rpNat">0 L</b></div></div>
-</section>
-
-<section id="reconcile" class="view">
-<div class="title"><div><h1>Reconciliation</h1><div class="sub">Quick control check</div></div></div>
-<div class="cards"><div class="card metric"><div class="label">Meter Movement</div><div id="rcMove" class="value">0 L</div></div><div class="card metric"><div class="label">NAT</div><div id="rcNat" class="value warn">0 L</div></div><div class="card metric"><div class="label">Net Sale</div><div id="rcNet" class="value petrol">0 L</div></div></div>
-<div class="card"><div class="row"><span>Opening → Closing</span><span class="pill success">Checked</span></div><div class="row"><span>NAT adjustment</span><span class="pill success">Automatic</span></div><div class="row"><span>Purchase → Stock</span><span class="pill success">Automatic</span></div></div>
-</section>
-
-<section id="settings" class="view">
-<div class="title"><div><h1>Settings</h1><div class="sub">Configure once — keep daily screen simple</div></div></div>
-<div class="card"><div class="section-head"><h3>Nozzle Setup</h3><span class="pill">1–10</span></div><div class="formgrid"><div class="field"><label>Petrol Nozzles</label><select id="pc" class="select"></select></div><div class="field"><label>Diesel Nozzles</label><select id="dc" class="select"></select></div></div><button class="btn primary" onclick="saveSetup()">Save Setup</button></div>
-<div class="card"><h3 style="margin-top:0">Opening Reading — One Time</h3><div class="formgrid"><div class="field"><label>Petrol Opening (L)</label><input id="po" class="input" type="number" step=".01"></div><div class="field"><label>Diesel Opening (L)</label><input id="do" class="input" type="number" step=".01"></div></div><button class="btn blue" onclick="saveOpening()">Save & Lock</button><div class="lock">Opening is then carried forward automatically from closing.</div></div>
-<div class="card"><h3 style="margin-top:0">Retail Price</h3><div class="formgrid"><div class="field"><label>Petrol ₹/L</label><input id="pp" class="input" type="number" step=".01"></div><div class="field"><label>Diesel ₹/L</label><input id="dp" class="input" type="number" step=".01"></div></div><button class="btn primary" onclick="savePrices()">Update Price</button><div class="lock">Price is reflected on the dashboard and remains unchanged until an authorized update.</div></div>
-<div class="card"><div class="section-head"><h3>NAT Quantity Options</h3><span class="small">Tap-to-choose</span></div><div id="natSettings" class="nat-options"></div></div>
-</section>
-</main></div>
-<nav class="bottom"><button data-view="dashboard" onclick="go('dashboard')"><i>🏠</i>Home</button><button data-view="nozzle" onclick="go('nozzle')"><i>⛽</i>Fuel</button><button data-view="purchase" onclick="go('purchase')"><i>🚚</i>Purchase</button><button data-view="reports" onclick="go('reports')"><i>📊</i>Reports</button><button data-view="settings" onclick="go('settings')"><i>⚙️</i>More</button></nav>
+<body><div class="app">
+<header><div class="head"><div class="menu">☰</div><div style="text-align:center"><div class="brand">CAPITAL FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
+<main>
+<div id="home" class="panel active">
+<div class="filters"><div class="field">📅 <input id="date" type="date"></div><div class="select">◷ <select><option>24 Hours</option></select></div></div>
+<div class="cards" style="margin-top:10px">
+<div class="sale hsd"><h3>⛽ HSD SALES (₹)</h3><div class="money" id="hm">₹0.00</div><div class="qty" id="hq">0.00 Ltr</div></div>
+<div class="sale ms"><h3>⛽ MS SALES (₹)</h3><div class="money" id="mm">₹0.00</div><div class="qty" id="mq">0.00 Ltr</div></div>
+<div class="stock hsd"><h4>⛽ HSD STOCK (Ltr)</h4><div class="num" id="hs">0.00</div></div>
+<div class="stock ms"><h4>⛽ MS STOCK (Ltr)</h4><div class="num" id="ms">0.00</div></div></div>
+<section><h2>Today's Overview</h2><div class="overview">
+<div class="row"><div><b>⛽ Nozzle Sales (Ltr)</b><br>HSD &nbsp; <span class="green" id="osH">0.00 Ltr</span><br>MS &nbsp;&nbsp; <span class="blue" id="osM">0.00 Ltr</span></div></div>
+<div class="row"><div><b>🚚 Today Purchase (Ltr)</b><br>HSD &nbsp; <span class="green" id="opH">0.00 Ltr</span><br>MS &nbsp;&nbsp; <span class="blue" id="opM">0.00 Ltr</span></div></div>
+<div class="row"><b>Total Revenue (₹)</b><b class="purple" id="rev">₹0.00</b></div></div></section>
+<section><h2>Quick Actions</h2><div class="actions">
+<button class="action" onclick="show('nozzle')"><span>🧾</span>Nozzle Reading</button>
+<button class="action" onclick="show('purchase')"><span>🚚</span>Stock Purchase</button>
+<button class="action" onclick="show('stock')"><span>📊</span>Stock Summary</button>
+<button class="action" onclick="show('reports')"><span>📄</span>Reports</button></div></section>
+<div class="settings"><button onclick="show('settings')">⚙️ Settings<br><span class="note">Rates, opening readings, nozzle configuration and other non-daily settings.</span></button></div>
 </div>
 
-<div id="modal" class="modal" onclick="if(event.target.id==='modal')closeModal()"><div class="sheet" id="sheet"></div></div>
+<div id="nozzle" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Nozzle Reading</h2>
+<div class="box"><div class="grid2"><div><div class="label">DATE</div><input id="nd" type="date"></div><div><div class="label">PERIOD</div><select><option>24 Hours</option><option>Morning</option><option>Evening</option><option>Night</option></select></div></div></div>
+<div class="box"><b>HSD NOZZLES</b><table class="table"><thead><tr><th>Nozzle</th><th>Opening</th><th>Closing</th><th>Sold</th></tr></thead><tbody id="hn"></tbody></table></div>
+<div class="box"><b>MS NOZZLES</b><table class="table"><thead><tr><th>Nozzle</th><th>Opening</th><th>Closing</th><th>Sold</th></tr></thead><tbody id="mn"></tbody></table></div>
+<div class="box"><b>NOZZLE ACCURACY TEST (NAT)</b><div class="grid2"><div><div class="label">HSD NAT (Ltr)</div><select id="nh"><option>0</option><option>5</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></div><div><div class="label">MS NAT (Ltr)</div><select id="nm"><option>0</option><option>5</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></div></div><p class="note">NAT is deducted from sale and added to stock automatically.</p></div>
+<button class="btn greenbtn" onclick="saveNozzle()">Update Reading</button></div>
 
+<div id="purchase" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Stock Purchase</h2>
+<div class="box"><div class="grid2"><div><div class="label">DATE</div><input id="pd" type="date"></div><div><div class="label">SUPPLIER</div><input placeholder="Supplier"></div></div></div>
+<div class="box"><b>HSD PURCHASE</b><div class="grid2"><div><div class="label">QUANTITY (Ltr)</div><input id="ph" type="number"></div><div><div class="label">RATE (₹/Ltr)</div><input id="rh" type="number" disabled></div></div></div>
+<div class="box"><b>MS PURCHASE</b><div class="grid2"><div><div class="label">QUANTITY (Ltr)</div><input id="pm" type="number"></div><div><div class="label">RATE (₹/Ltr)</div><input id="rm" type="number" disabled></div></div></div>
+<button class="btn greenbtn" onclick="savePurchase()">Update Purchase</button></div>
+
+<div id="stock" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Stock Summary (Automatic)</h2><div class="box"><table class="table"><thead><tr><th>Product</th><th>Opening</th><th>Purchase</th><th>Sales</th><th>Closing</th></tr></thead><tbody><tr><td>HSD</td><td id="ho">0</td><td id="hp">0</td><td id="hs2">0</td><td id="hc">0</td></tr><tr><td>MS</td><td id="mo">0</td><td id="mp">0</td><td id="ms2">0</td><td id="mc">0</td></tr></tbody></table></div><p class="note">Closing = Opening + Purchase − Nozzle Sales + NAT.</p></div>
+
+<div id="reports" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Fuel Reports</h2><div class="box"><div class="grid2"><div><div class="label">FROM DATE</div><input type="date"></div><div><div class="label">TO DATE</div><input type="date"></div></div><button class="btn" onclick="toast('Report generated')">View Report</button></div></div>
+
+<div id="settings" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Fuel Settings</h2>
+<div class="box"><b>Retail Prices — One-Time Entry</b><div class="grid2"><div><div class="label">HSD PRICE</div><input id="hr" type="number"></div><div><div class="label">MS PRICE</div><input id="mr" type="number"></div></div><button class="btn" onclick="saveRates()">Save Prices</button><p class="note">Prices remain unchanged until intentionally changed here.</p></div>
+<div class="box"><b>Opening Meter Readings</b><div class="grid2"><div><div class="label">HSD OPENING</div><input id="ho2" type="number"></div><div><div class="label">MS OPENING</div><input id="mo2" type="number"></div></div><button class="btn" onclick="saveOpening()">Save Opening</button></div>
+<div class="box"><b>Nozzle Configuration</b><div class="grid2"><div><div class="label">HSD NOZZLES</div><input id="hc2" type="number" min="1" max="10"></div><div><div class="label">MS NOZZLES</div><input id="mc2" type="number" min="1" max="10"></div></div><button class="btn" onclick="saveConfig()">Save Nozzle Setup</button></div>
+</div>
+</main>
+<nav class="bottom"><button class="active" onclick="show('home',this)"><span>⌂</span>Home</button><button onclick="show('nozzle',this)"><span>⛽</span>Nozzle</button><button onclick="show('purchase',this)"><span>🚚</span>Purchase</button><button onclick="show('stock',this)"><span>▤</span>Summary</button><button onclick="show('reports',this)"><span>•••</span>More</button></nav>
+<div id="toast" class="toast"></div></div>
 <script>
-const K='capital_fuel_mobile_v4',TODAY=new Date().toISOString().slice(0,10);
-let S=JSON.parse(localStorage.getItem(K)||'null')||{station:'Capital Filling Station',shift:'24 Hours',pc:4,dc:3,po:10000,do:6000,locked:false,pp:96.35,dp:89.45,nat:[0,5,10,15,20,25,30,35,40],purchases:[],r:{petrol:[],diesel:[]}};
-const $=id=>document.getElementById(id);const save=()=>localStorage.setItem(K,JSON.stringify(S));const L=n=>Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})+' L';const R=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
-function go(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===id));render();}
-function fuelTab(t){$('petrolBox').style.display=t==='petrol'?'block':'none';$('dieselBox').style.display=t==='diesel'?'block':'none';$('ptab').classList.toggle('active',t==='petrol');$('dtab').classList.toggle('active',t==='diesel');}
-function rows(t){let n=t==='petrol'?S.pc:S.dc,a=S.r[t]||[],base=t==='petrol'?S.po:S.do;return Array.from({length:n},(_,i)=>{let x=a[i]||{},o=x.o??(i===0?base:null),c=x.c??null,m=o!=null&&c!=null&&c>=o?c-o:0,nat=Number(x.n||0);return{i,o,c,m,nat,net:Math.max(0,m-nat)}})}
-function totals(t){let a=rows(t);return{m:a.reduce((z,x)=>z+x.m,0),n:a.reduce((z,x)=>z+x.nat,0),net:a.reduce((z,x)=>z+x.net,0)}}
-function nozzle(t){let name=t==='petrol'?'Petrol':'Diesel',a=rows(t),T=totals(t);return `<div class="section-head"><h3>${name} • ${a.length} nozzles</h3><span class="small">Opening locked</span></div>${a.map(x=>`<div class="nozzle"><div class="nozzle-head"><b>N${x.i+1}</b><span class="pill success">Daily</span></div><div class="nozzle-grid"><div class="mini"><b>Opening</b><span>${x.o==null?'—':x.o.toFixed(2)}</span></div><div class="field" style="margin:0"><label>Closing</label><input class="input" type="number" step=".01" value="${x.c??''}" placeholder="Enter" onchange="closing('${t}',${x.i},this.value)"></div></div><div class="calc"><div><small>Movement</small><b>${x.m.toFixed(2)} L</b></div><div><small>NAT</small><div class="nat"><select class="select" onchange="nat('${t}',${x.i},this.value)">${S.nat.map(v=>`<option value="${v}" ${v===x.nat?'selected':''}>${v===0?'None':v+' L'}</option>`).join('')}</select></div></div><div><small>Net Sale</small><b class="${t==='petrol'?'petrol':'diesel'}">${x.net.toFixed(2)} L</b></div></div></div>`).join('')}<div class="calc"><div><small>Total Movement</small><b>${T.m.toFixed(2)} L</b></div><div><small>Total NAT</small><b class="warn">${T.n.toFixed(2)} L</b></div><div><small>Net Sale</small><b class="${t==='petrol'?'petrol':'diesel'}">${T.net.toFixed(2)} L</b></div></div><div class="notice">NAT is deducted from sale and automatically added back to stock.</div>`}
-function renderNozzle(){$('petrolBox').innerHTML=nozzle('petrol');$('dieselBox').innerHTML=nozzle('diesel')}
-function closing(t,i,v){S.r[t][i]=S.r[t][i]||{};S.r[t][i].c=v===''?null:Number(v);save();renderNozzle();renderDash();}
-function nat(t,i,v){S.r[t][i]=S.r[t][i]||{};S.r[t][i].n=Number(v);save();renderNozzle();renderDash()}
-function saveReadings(){save();alert('Closing readings saved. Sales and stock updated automatically.')}
-function purchases(t){return S.purchases.filter(x=>x.f===t).reduce((z,x)=>z+Number(x.q),0)}
-function stock(t){return (t==='petrol'?S.po:S.do)+purchases(t)-totals(t).net}
-function renderDash(){let p=totals('petrol'),d=totals('diesel');$('dPetrol').textContent=L(p.net);$('dDiesel').textContent=L(d.net);$('dNat').textContent=L(p.n+d.n);$('dStock').textContent=L(stock('petrol')+stock('diesel'));$('dPP').textContent=R(S.pp);$('dDP').textContent=R(S.dp);$('curShift').textContent=S.shift}
-function addPurchase(){let x={date:$('pDate').value||TODAY,f:$('pFuel').value.toLowerCase(),sup:$('pSupplier').value,q:Number($('pQty').value||0),rate:Number($('pRate').value||0),ref:$('pRef').value};if(!x.q){alert('Enter quantity');return}S.purchases.unshift(x);save();alert('Purchase saved and stock updated.');render()}
-function renderPurchases(){$('pList').innerHTML=S.purchases.length?S.purchases.slice(0,6).map(x=>`<div class="row"><span><b>${x.f}</b><br><span class="small">${x.date} • ${x.sup||'Supplier'}</span></span><b>${L(x.q)}<br>${R(x.q*x.rate)}</b></div>`).join(''):'<span class="small">No purchases yet.</span>'}
-function saveSetup(){S.pc=+$('pc').value;S.dc=+$('dc').value;S.r.petrol=S.r.petrol.slice(0,S.pc);S.r.diesel=S.r.diesel.slice(0,S.dc);save();alert('Nozzle setup saved.');render()}
-function saveOpening(){if(S.locked){alert('Opening readings are locked.');return}S.po=+$('po').value||0;S.do=+$('do').value||0;S.locked=true;save();alert('Opening readings saved and locked.');render()}
-function savePrices(){S.pp=+$('pp').value||S.pp;S.dp=+$('dp').value||S.dp;save();alert('Retail prices updated.');render()}
-function pickShift(x){S.shift=x;save();$('rShift').value=x;alert('Shift set to '+x);render()}
-function range(x){let d=new Date();$('to').value=TODAY;$('from').value=x==='month'?new Date(d.getFullYear(),d.getMonth(),1).toISOString().slice(0,10):TODAY;renderReports()}
-function renderReports(){let p=totals('petrol'),d=totals('diesel');$('rpSales').textContent=L(p.net+d.net);$('rpPurchase').textContent=R(S.purchases.reduce((z,x)=>z+x.q*x.rate,0));$('rpStock').textContent=L(stock('petrol')+stock('diesel'));$('rpNat').textContent=L(p.n+d.n);$('rcMove').textContent=L(p.m+d.m);$('rcNat').textContent=L(p.n+d.n);$('rcNet').textContent=L(p.net+d.net)}
-function settings(){let opts='';for(let i=1;i<=10;i++){opts+=`<option>${i}</option>`}$('pc').innerHTML=opts;$('dc').innerHTML=opts;$('pc').value=S.pc;$('dc').value=S.dc;$('po').value=S.po;$('do').value=S.do;$('pp').value=S.pp;$('dp').value=S.dp;$('natSettings').innerHTML=S.nat.filter(x=>x>0).map(x=>`<button>${x} L</button>`).join('')}
-function render(){if($('rDate'))$('rDate').value=TODAY;if($('pDate'))$('pDate').value=TODAY;if($('rShift'))$('rShift').value=S.shift;renderDash();renderNozzle();renderPurchases();$('sPetrol').textContent=L(stock('petrol'));$('sDiesel').textContent=L(stock('diesel'));settings();renderReports()}
-render();
-</script>
-</body>
-</html>
+const today=new Date().toISOString().slice(0,10);
+let S=JSON.parse(localStorage.getItem('capitalFuel')||'null')||{rate:{h:89.45,m:96.35},open:{h:10218,m:13556.3},pur:{h:5000,m:5000},sale:{h:2000,m:3600},nat:{h:0,m:0},n:{h:2,m:2}};
+const money=x=>'₹'+Number(x).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const q=x=>Number(x).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const close=k=>S.open[k]+S.pur[k]-S.sale[k]+S.nat[k];
+function save(){localStorage.setItem('capitalFuel',JSON.stringify(S))}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1600)}
+function show(id,btn){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');render()}
+function render(){
+hm.textContent=money(S.sale.h*S.rate.h);mm.textContent=money(S.sale.m*S.rate.m);hq.textContent=q(S.sale.h)+' Ltr';mq.textContent=q(S.sale.m)+' Ltr';
+hs.textContent=q(close('h'));ms.textContent=q(close('m'));osH.textContent=q(S.sale.h)+' Ltr';osM.textContent=q(S.sale.m)+' Ltr';opH.textContent=q(S.pur.h)+' Ltr';opM.textContent=q(S.pur.m)+' Ltr';rev.textContent=money(S.sale.h*S.rate.h+S.sale.m*S.rate.m);
+rh.value=S.rate.h;rm.value=S.rate.m;hr.value=S.rate.h;mr.value=S.rate.m;ho2.value=S.open.h;mo2.value=S.open.m;hc2.value=S.n.h;mc2.value=S.n.m;
+ho.textContent=q(S.open.h);hp.textContent=q(S.pur.h);hs2.textContent=q(S.sale.h);hc.textContent=q(close('h'));mo.textContent=q(S.open.m);mp.textContent=q(S.pur.m);ms2.textContent=q(S.sale.m);mc.textContent=q(close('m'));renderNozzles()}
+function renderNozzles(){let make=k=>{let rows='',n=S.n[k],sold=S.sale[k]/n;for(let i=1;i<=n;i++){let o=10000+(i-1)*500;rows+=`<tr><td>${k.toUpperCase()} N${i}</td><td>${o.toFixed(2)}</td><td>${(o+sold).toFixed(2)}</td><td>${sold.toFixed(2)}</td></tr>`}return rows};hn.innerHTML=make('h');mn.innerHTML=make('m')}
+function saveNozzle(){S.nat.h=+nh.value;S.nat.m=+nm.value;save();toast('Nozzle reading updated');render()}
+function savePurchase(){S.pur.h=+ph.value||0;S.pur.m=+pm.value||0;save();toast('Purchase updated');render()}
+function saveRates(){S.rate.h=+hr.value||0;S.rate.m=+mr.value||0;save();toast('Prices updated');render()}
+function saveOpening(){S.open.h=+ho2.value||0;S.open.m=+mo2.value||0;save();toast('Opening readings saved');render()}
+function saveConfig(){S.n.h=Math.max(1,Math.min(10,+hc2.value||2));S.n.m=Math.max(1,Math.min(10,+mc2.value||2));save();toast('Nozzle setup saved');render()}
+date.value=today;nd.value=today;pd.value=today;render()
+</script></body></html>
