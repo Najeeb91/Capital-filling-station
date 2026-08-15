@@ -167,6 +167,38 @@ function saveAllNozzleReadings(){
   // while the edited meter readings remain available for verification.
   save(); toast('Existing nozzle readings updated'); render();
 }
+function loadNozzleEditor(){
+  ensureNozzleData();
+  const k=changeNozzleFuel.value;
+  const n=S.n[k]||0;
+  changeNozzleNumber.innerHTML='';
+  for(let i=1;i<=n;i++){
+    const o=document.createElement('option');
+    o.value=i-1;
+    o.textContent='N'+i;
+    changeNozzleNumber.appendChild(o);
+  }
+  const i=Number(changeNozzleNumber.value||0);
+  const r=S.readings[k][i];
+  if(r){
+    changeOpening.value=Number(r.opening).toFixed(2);
+    changeClosing.value=Number(r.closing).toFixed(2);
+  }
+}
+function saveChangedNozzle(){
+  ensureNozzleData();
+  const k=changeNozzleFuel.value;
+  const i=Number(changeNozzleNumber.value);
+  if(!S.readings[k] || !S.readings[k][i]){toast('Select a nozzle');return}
+  const o=Number(changeOpening.value), c=Number(changeClosing.value);
+  if(!Number.isFinite(o)||!Number.isFinite(c)){toast('Enter both readings');return}
+  S.readings[k][i].opening=o;
+  S.readings[k][i].closing=c;
+  save();
+  toast((k==='h'?'HSD ':'MS ')+'N'+(i+1)+' reading changed');
+  render();
+  loadNozzleEditor();
+}
 function saveNozzle(){
   ensureNozzleData();
   S.nat.h=+nh.value; S.nat.m=+nm.value;
@@ -183,7 +215,7 @@ function addNozzle(){
   const i=S.n[k]-1;
   const opening=(k==='h'?S.open.h:S.open.m)+(i*500);
   S.readings[k].push({opening,closing:opening});
-  save(); toast((k==='h'?'HSD':'MS')+' N'+S.n[k]+' added'); render();
+  save(); toast((k==='h'?'HSD':'MS')+' N'+S.n[k]+' added'); render(); if(document.getElementById('changeNozzleFuel')) loadNozzleEditor();
 }
   S.n[k]=Math.min(10,(S.n[k]||0)+1);
   addNozzleName.value='';
