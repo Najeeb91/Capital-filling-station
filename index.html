@@ -80,6 +80,16 @@ section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px so
 
 <div class="box"><b>Retail Prices — One-Time Entry</b><div class="grid2"><div><div class="label">HSD PRICE</div><input id="hr" type="number"></div><div><div class="label">MS PRICE</div><input id="mr" type="number"></div></div><button class="btn" onclick="saveRates()">Save Prices</button><p class="note">Prices remain unchanged until intentionally changed here.</p></div>
 <div class="box"><b>Opening Meter Readings</b><div class="grid2"><div><div class="label">HSD OPENING</div><input id="ho2" type="number"></div><div><div class="label">MS OPENING</div><input id="mo2" type="number"></div></div><button class="btn" onclick="saveOpening()">Save Opening</button></div>
+<div class="box">
+<b>Add Nozzle</b>
+<p class="note">Add a new HSD or MS nozzle when a dispenser/nozzle is added. Existing nozzle readings are retained.</p>
+<div class="grid2">
+<div><div class="label">FUEL TYPE</div><select id="addNozzleFuel"><option value="h">HSD</option><option value="m">MS</option></select></div>
+<div><div class="label">NOZZLE NAME</div><input id="addNozzleName" placeholder="e.g. HSD N3"></div>
+</div>
+<button class="btn greenbtn" onclick="addNozzle()">+ Add Nozzle</button>
+</div>
+
 <div class="box"><b>Nozzle Configuration</b><div class="grid2"><div><div class="label">HSD NOZZLES</div><input id="hc2" type="number" min="1" max="10"></div><div><div class="label">MS NOZZLES</div><input id="mc2" type="number" min="1" max="10"></div></div><button class="btn" onclick="saveConfig()">Save Nozzle Setup</button></div>
 </div>
 </main>
@@ -102,11 +112,19 @@ hm.textContent=money(S.sale.h*S.rate.h);mm.textContent=money(S.sale.m*S.rate.m);
 hs.textContent=q(close('h'));ms.textContent=q(close('m'));osH.textContent=q(S.sale.h)+' Ltr';osM.textContent=q(S.sale.m)+' Ltr';opH.textContent=q(S.pur.h)+' Ltr';opM.textContent=q(S.pur.m)+' Ltr';rev.textContent=money(S.sale.h*S.rate.h+S.sale.m*S.rate.m);
 rh.value=S.rate.h;rm.value=S.rate.m;hr.value=S.rate.h;mr.value=S.rate.m;ho2.value=S.open.h;mo2.value=S.open.m;hc2.value=S.n.h;mc2.value=S.n.m;editHsdClosing.value=Number.isFinite(S.manualCloseH)?S.manualCloseH:close('h');editMsClosing.value=Number.isFinite(S.manualCloseM)?S.manualCloseM:close('m');editHsdStock.value=S.open.h;editMsStock.value=S.open.m;
 ho.textContent=q(S.open.h);hp.textContent=q(S.pur.h);hs2.textContent=q(S.sale.h);hc.textContent=q(close('h'));mo.textContent=q(S.open.m);mp.textContent=q(S.pur.m);ms2.textContent=q(S.sale.m);mc.textContent=q(close('m'));renderNozzles()}
-function renderNozzles(){let make=k=>{let rows='',n=S.n[k],sold=S.sale[k]/n;for(let i=1;i<=n;i++){let o=10000+(i-1)*500;rows+=`<tr><td>${k.toUpperCase()} N${i}</td><td>${o.toFixed(2)}</td><td>${(o+sold).toFixed(2)}</td><td>${sold.toFixed(2)}</td></tr>`}return rows};hn.innerHTML=make('h');mn.innerHTML=make('m')}
+function renderNozzles(){let make=k=>{let rows='',n=S.n[k],sold=S.sale[k]/n;for(let i=1;i<=n;i++){let o=10000+(i-1)*500;rows+=`<tr><td>N${i}</td><td>${o.toFixed(2)}</td><td>${(o+sold).toFixed(2)}</td><td>${sold.toFixed(2)}</td></tr>`}return rows};hn.innerHTML=make('h');mn.innerHTML=make('m')}
 function saveNozzle(){S.nat.h=+nh.value;S.nat.m=+nm.value;save();toast('Nozzle reading updated');render()}
 function savePurchase(){S.pur.h=+ph.value||0;S.pur.m=+pm.value||0;save();toast('Purchase updated');render()}
 function saveRates(){S.rate.h=+hr.value||0;S.rate.m=+mr.value||0;save();toast('Prices updated');render()}
 function saveOpening(){S.open.h=+ho2.value||0;S.open.m=+mo2.value||0;save();toast('Opening readings saved');render()}
+function addNozzle(){
+  const k=addNozzleFuel.value;
+  const name=(addNozzleName.value||'').trim();
+  if(S.n[k]>=10){toast('Maximum 10 nozzles');return}
+  S.n[k]=Math.min(10,(S.n[k]||0)+1);
+  addNozzleName.value='';
+  save(); toast((k==='h'?'HSD':'MS')+' nozzle added'); render();
+}
 function saveConfig(){S.n.h=Math.max(1,Math.min(10,+hc2.value||2));S.n.m=Math.max(1,Math.min(10,+mc2.value||2));save();toast('Nozzle setup saved');render()}
 function editNozzleSettings(){
   const h=Number(editHsdClosing.value), m=Number(editMsClosing.value);
