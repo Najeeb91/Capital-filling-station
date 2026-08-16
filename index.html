@@ -217,10 +217,6 @@ function addNozzle(){
   S.readings[k].push({opening,closing:opening});
   save(); toast((k==='h'?'HSD':'MS')+' N'+S.n[k]+' added'); render(); if(document.getElementById('changeNozzleFuel')) loadNozzleEditor();
 }
-  S.n[k]=Math.min(10,(S.n[k]||0)+1);
-  addNozzleName.value='';
-  save(); toast((k==='h'?'HSD':'MS')+' nozzle added'); render();
-}
 function saveConfig(){
   S.n.h=Math.max(1,Math.min(10,+hc2.value||2));
   S.n.m=Math.max(1,Math.min(10,+mc2.value||2));
