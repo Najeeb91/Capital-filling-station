@@ -9,23 +9,37 @@
 *{box-sizing:border-box}body{margin:0;background:#f6f8fc;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.app{max-width:520px;margin:auto;min-height:100vh;background:#fff}
 header{background:linear-gradient(135deg,#063da9,#125be0);color:#fff;padding:18px;position:sticky;top:0;z-index:5}.head{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;font-size:20px}.sub{font-size:10px;opacity:.85}.menu{font-size:24px}
 main{padding:14px 14px 90px}.filters,.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field,.select{border:1px solid var(--line);border-radius:13px;padding:11px;background:#fff}.field input,.select select{border:0;outline:0;width:100%;background:transparent}
-.sale{color:#fff;border-radius:18px;padding:17px;min-height:145px}.hsd{background:linear-gradient(145deg,#07963f,#087936)}.ms{background:linear-gradient(145deg,#1758da,#123db6)}.sale h3{margin:0 0 14px;font-size:17px}.money{font-size:23px;font-weight:800}.qty{font-size:19px;font-weight:800;margin-top:10px}.stock{border:1px solid var(--line);border-radius:16px;padding:16px;min-height:105px}.stock h4{margin:0 0 12px}.stock.hsd{color:var(--orange);background:#fffaf5}.stock.ms{color:var(--purple);background:#fbf9ff}.num{font-size:21px;font-weight:800}
+.sale{color:#fff;border-radius:18px;padding:17px;min-height:145px}.hsd{background:linear-gradient(145deg,#07963f,#087936)}.ms{background:linear-gradient(145deg,#1758da,#123db6)}.sale h3{margin:0 0 14px;font-size:17px}.money{font-size:20px;font-weight:800;margin-top:3px}.qty{font-size:20px;font-weight:800;margin-top:5px}.sale-label{font-size:9px;letter-spacing:.5px;opacity:.82;margin-top:2px;font-weight:700}.stock{border:1px solid var(--line);border-radius:16px;padding:16px;min-height:105px}.stock h4{margin:0 0 12px}.stock.hsd{color:var(--orange);background:#fffaf5}.stock.ms{color:var(--purple);background:#fbf9ff}.num{font-size:21px;font-weight:800}
 section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px solid var(--line);border-radius:16px;padding:13px}.row{padding:11px 0;border-bottom:1px solid #edf0f5;display:flex;justify-content:space-between;gap:10px}.row:last-child{border:0}.green{color:var(--green)}.blue{color:var(--blue)}.purple{color:var(--purple)}
 .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.action{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 4px;font-size:11px;font-weight:700}.action span{display:block;font-size:21px;margin-bottom:6px}
 .settings{margin-top:16px;border:1px solid #bfd1fb;background:#f7faff;border-radius:16px;padding:15px}.settings button{border:0;background:none;width:100%;text-align:left;font-weight:800;color:var(--navy)}
 .panel{display:none}.panel.active{display:block}.back{border:0;background:none;color:var(--blue);font-weight:800;padding:2px 0 12px}.box{border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.label{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:5px}input,select{max-width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:#fff}.btn{width:100%;border:0;border-radius:11px;padding:12px;background:var(--blue);color:#fff;font-weight:800;margin-top:10px}.greenbtn{background:var(--green)}.note{font-size:11px;color:var(--muted);line-height:1.45}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:7px 3px;border-bottom:1px solid var(--line);text-align:right}.table th:first-child,.table td:first-child{text-align:left}
 .bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid var(--line);z-index:10}.bottom button{border:0;background:#fff;padding:8px 2px;color:#667085;font-size:10px}.bottom button span{display:block;font-size:20px}.bottom .active{color:var(--blue);font-weight:800}
 .toast{display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:9px 14px;border-radius:9px;font-size:12px;z-index:20}
-.nozEdit{width:86px;padding:7px!important;border:1px solid var(--line);border-radius:8px;background:#fff}</style>
+.nozEdit{width:86px;padding:7px!important;border:1px solid var(--line);border-radius:8px;background:#fff}
+.sale-title{font-size:17px;font-weight:900;letter-spacing:.3px;margin-bottom:12px}
+.metric-label{font-size:9px;letter-spacing:.7px;font-weight:800;opacity:.78}
+.metric-divider{height:1px;background:rgba(255,255,255,.28);margin:9px 0 7px}
+.sale .qty{font-size:20px;font-weight:900;margin:3px 0 0}
+.sale .money{font-size:21px;font-weight:900;margin:3px 0 0}
+
+.zero-state{font-size:10px;font-weight:800;letter-spacing:.4px;color:#667085;background:#f5f7fa;border-radius:9px;padding:7px 9px;margin-top:10px;text-align:center}
+.card-caption{font-size:10px;color:#667085;margin-top:5px}
+.sale-title{font-size:17px;font-weight:900;letter-spacing:.3px;margin-bottom:12px}
+.metric-label{font-size:9px;letter-spacing:.7px;font-weight:800;opacity:.78}
+.metric-divider{height:1px;background:rgba(255,255,255,.28);margin:9px 0 7px}
+.sale .qty{font-size:20px;font-weight:900;margin:3px 0 0}
+.sale .money{font-size:21px;font-weight:900;margin:3px 0 0}
+</style>
 </head>
 <body><div class="app">
 <header><div class="head"><div class="menu">☰</div><div style="text-align:center"><div class="brand">CAPITAL FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
 <main>
 <div id="home" class="panel active">
-<div class="filters"><div class="field">📅 <input id="date" type="date"></div><div class="select">◷ <select><option>24 Hours</option></select></div></div>
+<div class="zero-state">TESTING MODE • ALL ENTRIES START AT ZERO</div><div class="filters"><div class="field">📅 <input id="date" type="date"></div><div class="select">◷ <select><option>24 Hours</option></select></div></div>
 <div class="cards" style="margin-top:10px">
-<div class="sale hsd"><h3>⛽ HSD SALES (₹)</h3><div class="money" id="hm">₹0.00</div><div class="qty" id="hq">0.00 Ltr</div></div>
-<div class="sale ms"><h3>⛽ MS SALES (₹)</h3><div class="money" id="mm">₹0.00</div><div class="qty" id="mq">0.00 Ltr</div></div>
+<div class="sale hsd"><div class="sale-title">HSD SALES</div><div class="metric-label">QUANTITY</div><div class="qty" id="hq">0.00 Ltr</div><div class="metric-divider"></div><div class="metric-label">REVENUE</div><div class="money" id="hm">₹0.00</div></div>
+<div class="sale ms"><div class="sale-title">MS SALES</div><div class="metric-label">QUANTITY</div><div class="qty" id="mq">0.00 Ltr</div><div class="metric-divider"></div><div class="metric-label">REVENUE</div><div class="money" id="mm">₹0.00</div></div>
 <div class="stock hsd"><h4>⛽ HSD STOCK (Ltr)</h4><div class="num" id="hs">0.00</div></div>
 <div class="stock ms"><h4>⛽ MS STOCK (Ltr)</h4><div class="num" id="ms">0.00</div></div></div>
 <section><h2>Today's Overview</h2><div class="overview">
@@ -45,7 +59,12 @@ section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px so
 <div class="box"><b>HSD NOZZLES</b><table class="table"><thead><tr><th>Nozzle</th><th>Opening</th><th>Closing</th><th>Sold</th></tr></thead><tbody id="hn"></tbody></table></div>
 <div class="box"><b>MS NOZZLES</b><table class="table"><thead><tr><th>Nozzle</th><th>Opening</th><th>Closing</th><th>Sold</th></tr></thead><tbody id="mn"></tbody></table></div>
 <div class="box"><b>NOZZLE ACCURACY TEST (NAT)</b><div class="grid2"><div><div class="label">HSD NAT (Ltr)</div><select id="nh"><option>0</option><option>5</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></div><div><div class="label">MS NAT (Ltr)</div><select id="nm"><option>0</option><option>5</option><option>10</option><option>15</option><option>20</option><option>25</option><option>30</option></select></div></div><p class="note">NAT is deducted from sale and added to stock automatically.</p></div>
-<button class="btn greenbtn" onclick="saveNozzle()">Update Reading</button></div>
+<div class="box"><b>SALE CALCULATION</b>
+<div class="row"><span>HSD Net Sale</span><b id="calcHsd">0.00 Ltr</b></div>
+<div class="row"><span>MS Net Sale</span><b id="calcMs">0.00 Ltr</b></div>
+<div class="row"><span>Total Revenue</span><b id="calcRevenue">₹0.00</b></div>
+<p class="note">Closing − Opening − NAT = Net Sale; Net Sale × retail rate = Revenue.</p>
+</div><button class="btn greenbtn" onclick="saveNozzle()">Update Reading</button></div>
 
 <div id="purchase" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Stock Purchase</h2>
 <div class="box"><div class="grid2"><div><div class="label">DATE</div><input id="pd" type="date"></div><div><div class="label">SUPPLIER</div><input placeholder="Supplier"></div></div></div>
@@ -57,7 +76,7 @@ section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px so
 
 <div id="reports" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Fuel Reports</h2><div class="box"><div class="grid2"><div><div class="label">FROM DATE</div><input type="date"></div><div><div class="label">TO DATE</div><input type="date"></div></div><button class="btn" onclick="toast('Report generated')">View Report</button></div></div>
 
-<div id="settings" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Fuel Settings</h2>
+<div id="settings" class="panel"><button class="back" onclick="show('home')">← Dashboard</button><h2>Fuel Settings</h2><p class="card-caption">One-time configuration and corrections — use only when required.</p>
 <div class="box">
 <b>Nozzle Management</b>
 <p class="note">Fuel type is shown separately. Nozzles are always numbered N1, N2, N3… Edit existing readings here; there is no delete option.</p>
@@ -105,56 +124,51 @@ section{margin-top:17px}h2{font-size:18px;margin:0 0 9px}.overview{border:1px so
 <nav class="bottom"><button class="active" onclick="show('home',this)"><span>⌂</span>Home</button><button onclick="show('nozzle',this)"><span>⛽</span>Nozzle</button><button onclick="show('purchase',this)"><span>🚚</span>Purchase</button><button onclick="show('stock',this)"><span>▤</span>Summary</button><button onclick="show('reports',this)"><span>•••</span>More</button></nav>
 <div id="toast" class="toast"></div></div>
 <script>
-const today=new Date().toISOString().slice(0,10);
-let S=JSON.parse(localStorage.getItem('capitalFuel')||'null')||{rate:{h:89.45,m:96.35},open:{h:10218,m:13556.3},pur:{h:5000,m:5000},sale:{h:2000,m:3600},nat:{h:0,m:0},n:{h:2,m:2},readings:{h:[],m:[]}};
+localStorage.removeItem('capitalFuel'); const today=new Date().toISOString().slice(0,10);
+let S={rate:{h:0,m:0},open:{h:0,m:0},pur:{h:0,m:0},sale:{h:0,m:0},nat:{h:0,m:0},n:{h:1,m:1},readings:{h:[{opening:0,closing:0}],m:[{opening:0,closing:0}]}};
 const money=x=>'₹'+Number(x).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
 const q=x=>Number(x).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
 const close=k=>S.open[k]+S.pur[k]-S.sale[k]+S.nat[k];
 function save(){localStorage.setItem('capitalFuel',JSON.stringify(S))}
 function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1600)}
 function show(id,btn){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');render()}
-function render(){
+function render(){const ns=calculateNozzleSales();if(ns.h>0||ns.m>0){S.sale.h=ns.h;S.sale.m=ns.m;}
+ensureNozzleData();
+syncSalesFromReadings();
 hm.textContent=money(S.sale.h*S.rate.h);mm.textContent=money(S.sale.m*S.rate.m);hq.textContent=q(S.sale.h)+' Ltr';mq.textContent=q(S.sale.m)+' Ltr';
-hs.textContent=q(close('h'));ms.textContent=q(close('m'));osH.textContent=q(S.sale.h)+' Ltr';osM.textContent=q(S.sale.m)+' Ltr';opH.textContent=q(S.pur.h)+' Ltr';opM.textContent=q(S.pur.m)+' Ltr';rev.textContent=money(S.sale.h*S.rate.h+S.sale.m*S.rate.m);
+hs.textContent=q(close('h'));ms.textContent=q(close('m'));osH.textContent=q(S.sale.h)+' Ltr';osM.textContent=q(S.sale.m)+' Ltr';opH.textContent=q(S.pur.h)+' Ltr';opM.textContent=q(S.pur.m)+' Ltr';rev.textContent=money(S.sale.h*S.rate.h+S.sale.m*S.rate.m);if(document.getElementById('calcHsd'))calcHsd.textContent=q(S.sale.h)+' Ltr';if(document.getElementById('calcMs'))calcMs.textContent=q(S.sale.m)+' Ltr';if(document.getElementById('calcRevenue'))calcRevenue.textContent=money(S.sale.h*S.rate.h+S.sale.m*S.rate.m);
 rh.value=S.rate.h;rm.value=S.rate.m;hr.value=S.rate.h;mr.value=S.rate.m;ho2.value=S.open.h;mo2.value=S.open.m;hc2.value=S.n.h;mc2.value=S.n.m;
 ho.textContent=q(S.open.h);hp.textContent=q(S.pur.h);hs2.textContent=q(S.sale.h);hc.textContent=q(close('h'));mo.textContent=q(S.open.m);mp.textContent=q(S.pur.m);ms2.textContent=q(S.sale.m);mc.textContent=q(close('m'));renderNozzles()}
 function ensureNozzleData(){
+  S.readings=S.readings||{};
   ['h','m'].forEach(k=>{
-    if(!Array.isArray(S.readings?.[k])) {
-      S.readings = S.readings || {};
-      S.readings[k] = [];
-    }
+    if(!Array.isArray(S.readings[k])) S.readings[k]=[];
     const n=S.n[k]||1;
     while(S.readings[k].length<n){
       const i=S.readings[k].length;
-      const opening=(k==='h'?S.open.h:S.open.m)+(i*500);
-      S.readings[k].push({opening,closing:opening});
+      const opening=(k==='h'?S.open.h:S.open.m);
+      let totalExisting=S.readings[k].reduce((a,r)=>a+(Number(r.closing)-Number(r.opening)),0);
+      const target=Number(S.sale[k]||0)+Number(S.nat[k]||0);
+      const remaining=Math.max(0,target-totalExisting);
+      S.readings[k].push({opening,closing:opening+remaining});
     }
     S.readings[k]=S.readings[k].slice(0,n);
   });
 }
+function syncSalesFromReadings(){
+  ensureNozzleData();
+  ['h','m'].forEach(k=>{
+    const movement=S.readings[k].reduce((a,r)=>a+(Number(r.closing)||0)-(Number(r.opening)||0),0);
+    S.sale[k]=Math.max(0,movement-(Number(S.nat[k])||0));
+  });
+}
 function renderNozzles(){
   ensureNozzleData();
-  const make=k=>{
-    return S.readings[k].map((r,i)=>`<tr>
-      <td>N${i+1}</td>
-      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="opening" type="number" step="0.01" value="${Number(r.opening).toFixed(2)}"></td>
-      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="closing" type="number" step="0.01" value="${Number(r.closing).toFixed(2)}"></td>
-    </tr>`).join('');
-  };
+  const make=k=>S.readings[k].map((r,i)=>`<tr><td>N${i+1}</td><td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="opening" type="number" step="0.01" value="${Number(r.opening).toFixed(2)}"></td><td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="closing" type="number" step="0.01" value="${Number(r.closing).toFixed(2)}"></td><td>${(Number(r.closing)-Number(r.opening)).toFixed(2)}</td></tr>`).join('');
   hn.innerHTML=make('h'); mn.innerHTML=make('m');
-
-  const editMake=k=>{
-    return S.readings[k].map((r,i)=>`<tr>
-      <td>N${i+1}</td>
-      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="opening" type="number" step="0.01" value="${Number(r.opening).toFixed(2)}"></td>
-      <td><input class="nozEdit" data-k="${k}" data-i="${i}" data-field="closing" type="number" step="0.01" value="${Number(r.closing).toFixed(2)}"></td>
-    </tr>`).join('');
-  };
-  editHsdNozzles.innerHTML=editMake('h');
-  editMsNozzles.innerHTML=editMake('m');
-
-  if(addNozzleName) addNozzleName.value='N'+((S.n[addNozzleFuel.value]||0)+1);
+  if(document.getElementById('editHsdNozzles')) editHsdNozzles.innerHTML=make('h');
+  if(document.getElementById('editMsNozzles')) editMsNozzles.innerHTML=make('m');
+  if(document.getElementById('addNozzleName')) addNozzleName.value='N'+((S.n[addNozzleFuel.value]||0)+1);
 }
 function saveAllNozzleReadings(){
   ensureNozzleData();
@@ -165,7 +179,7 @@ function saveAllNozzleReadings(){
   });
   // Keep the existing daily sales figure as the station's recorded sale,
   // while the edited meter readings remain available for verification.
-  save(); toast('Existing nozzle readings updated'); render();
+  syncSalesFromReadings(); save(); toast('Existing nozzle readings updated'); render();
 }
 function loadNozzleEditor(){
   ensureNozzleData();
@@ -194,14 +208,24 @@ function saveChangedNozzle(){
   if(!Number.isFinite(o)||!Number.isFinite(c)){toast('Enter both readings');return}
   S.readings[k][i].opening=o;
   S.readings[k][i].closing=c;
+  syncSalesFromReadings();
   save();
   toast((k==='h'?'HSD ':'MS ')+'N'+(i+1)+' reading changed');
   render();
   loadNozzleEditor();
 }
+function calculateNozzleSales(){
+  ensureNozzleData();
+  const total=k=>(S.readings[k]||[]).reduce((sum,r)=>sum+Math.max(0,Number(r.closing)-Number(r.opening)),0);
+  return {
+    h:Math.max(0,total('h')-Number(S.nat.h||0)),
+    m:Math.max(0,total('m')-Number(S.nat.m||0))
+  };
+}
 function saveNozzle(){
   ensureNozzleData();
   S.nat.h=+nh.value; S.nat.m=+nm.value;
+  syncSalesFromReadings();
   save(); toast('NAT updated'); render();
 }
 function savePurchase(){S.pur.h=+ph.value||0;S.pur.m=+pm.value||0;save();toast('Purchase updated');render()}
@@ -213,8 +237,9 @@ function addNozzle(){
   S.n[k]=(S.n[k]||0)+1;
   ensureNozzleData();
   const i=S.n[k]-1;
-  const opening=(k==='h'?S.open.h:S.open.m)+(i*500);
+  const opening=(k==='h'?S.open.h:S.open.m);
   S.readings[k].push({opening,closing:opening});
+  syncSalesFromReadings();
   save(); toast((k==='h'?'HSD':'MS')+' N'+S.n[k]+' added'); render(); if(document.getElementById('changeNozzleFuel')) loadNozzleEditor();
 }
 function saveConfig(){
