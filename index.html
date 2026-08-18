@@ -15,7 +15,7 @@ h2{font-size:19px;margin:5px 0 11px}.section{margin-top:15px}.row{display:flex;j
 .btn{border:0;border-radius:10px;padding:11px 13px;background:#1557d6;color:#fff;font-weight:800;width:100%;margin-top:8px}.green{background:#07883b}.red{background:#d92d3f}.gray{background:#667085}.back{border:0;background:none;color:#1557d6;font-weight:800;padding:0 0 10px}
 .action{width:100%;padding:14px;text-align:left;background:#fff;border:1px solid #dfe5ee;border-radius:13px;font-weight:800}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;background:#fff;font:inherit}.field{margin-bottom:9px}.small{font-size:10px;color:#667085}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:7px 3px;border-bottom:1px solid #e5e9ef;text-align:right}.table th:first-child,.table td:first-child{text-align:left}
-.nat{display:flex;gap:6px;flex-wrap:wrap}.nat button{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:8px 10px;font-weight:700}.nat button.selected{background:#1557d6;color:#fff}
+.nat{display:flex;gap:6px;flex-wrap:wrap}.nat button{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:8px 10px;font-weight:700}.nat button.selected{background:#1557d6;color:#fff}.nat{margin-top:7px}
 .bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid #dfe5ee;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}.bottom button{border:0;background:#fff;padding:8px 2px;font-size:10px;color:#667085}.bottom button b{display:block;font-size:19px}.bottom button.active{color:#1557d6;font-weight:900}
 .toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:9px 13px;border-radius:9px;font-size:11px;display:none;z-index:20}
 </style>
@@ -51,7 +51,11 @@ input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;b
 <div class="card"><div class="field"><div class="label">PERIOD</div><select id="period"><option>24 Hours</option><option>Morning</option><option>Evening</option><option>Night</option></select></div><div class="small">Closing − Opening = Movement. Movement − NAT = Net Sale.</div></div>
 <div class="section card"><b>HSD</b><div id="hsdNozzles"></div></div>
 <div class="section card"><b>MS</b><div id="msNozzles"></div></div>
-<div class="section card"><b>NOZZLE ACCURACY TEST (NAT)</b><p class="small">Tap a value. NAT is excluded from sale and returned to stock.</p><div class="nat" id="natButtons"></div></div>
+<div class="section card"><b>NOZZLE ACCURACY TEST (NAT)</b>
+<p class="small">Select NAT separately for HSD and MS. Each fuel keeps its own selected value. NAT is excluded from that fuel's sale and returned to that fuel's stock.</p>
+<div style="margin-top:10px"><b>HSD</b><div class="small">Selected NAT: <span id="natCurrentH">0 Ltr</span></div><div class="nat" id="natButtonsH"></div></div>
+<div style="margin-top:14px"><b>MS</b><div class="small">Selected NAT: <span id="natCurrentM">0 Ltr</span></div><div class="nat" id="natButtonsM"></div></div>
+</div>
 <button class="btn green" onclick="saveNozzle()">Save Nozzle Reading</button>
 <button class="btn gray" onclick="resetNozzleForm()">Reset Unsaved Changes</button>
 </section>
@@ -107,8 +111,22 @@ rhSys.textContent=q(stock('h'));rhPhy.textContent=q(S.dip.h||0);rhVar.textConten
 rateH.value=S.rate.h;rateM.value=S.rate.m;openH.value=S.open.h;openM.value=S.open.m;nextNozzle.value='N'+((S.readings[addFuel.value]||[]).length+1);loadEditNozzle();renderNozzles();renderNAT();renderAlerts()
 }
 function renderNozzles(){const make=k=>{let s='';(S.readings[k]||[]).forEach((r,i)=>{s+=`<div class="card" style="margin-top:8px"><b>N${i+1}</b><div class="grid2" style="margin-top:8px"><div><div class="label">OPENING</div><input data-k="${k}" data-i="${i}" data-f="o" type="number" step=".01" value="${r.o}"></div><div><div class="label">CLOSING</div><input data-k="${k}" data-i="${i}" data-f="c" type="number" step=".01" value="${r.c}"></div></div></div>`});return s};hsdNozzles.innerHTML=make('h');msNozzles.innerHTML=make('m')}
-function renderNAT(){natButtons.innerHTML=[5,10,15,20,25,30,35,40,45,50].map(v=>`<button class="${S.nat.h===v?'selected':''}" onclick="setNat(${v})">${v} L</button>`).join('')}
-function setNat(v){const k=editFuel.value;S.nat[k]=v;save();toast((k==='h'?'HSD':'MS')+' NAT '+v+' L');render()}
+function natOptions(k){
+const vals=[5,10,15,20,25,30,35,40,45,50];
+return vals.map(v=>`<button class="${S.nat[k]===v?'selected':''}" onclick="setNat('${k}',${v})">${v} L</button>`).join('');
+}
+function renderNAT(){
+const h=document.getElementById('natButtonsH');
+const m=document.getElementById('natButtonsM');
+if(h)h.innerHTML=natOptions('h');
+if(m)m.innerHTML=natOptions('m');
+const ch=document.getElementById('natCurrentH');
+const cm=document.getElementById('natCurrentM');
+if(ch)ch.textContent=q(S.nat.h)+' Ltr';
+if(cm)cm.textContent=q(S.nat.m)+' Ltr';
+}
+
+function setNat(k,v){if(!['h','m'].includes(k))return;if(![5,10,15,20,25,30,35,40,45,50].includes(Number(v)))return;S.nat[k]=Number(v);save();toast((k==='h'?'HSD':'MS')+' NAT '+v+' L');render()}
 function saveNozzle(){document.querySelectorAll('#nozzle input[data-k]').forEach(e=>{S.readings[e.dataset.k][+e.dataset.i][e.dataset.f]=Math.max(0,+e.value||0)});save();toast('Nozzle readings saved');render()}
 function resetNozzleForm(){render();toast('Unsaved nozzle changes reset')}
 function savePurchase(){S.purchase.h=Math.max(0,+pHsd.value||0);S.purchase.m=Math.max(0,+pMs.value||0);S.purchase.date=pDate.value;S.purchase.supplier=supplier.value;S.purchase.invoice=invoice.value;save();toast('Purchase saved');render()}
