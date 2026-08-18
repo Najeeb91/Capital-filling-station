@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Capital Filling Station</title>
+<title>Asian Filling Station</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
 .app{max-width:520px;margin:auto;min-height:100vh;background:#fff}.header{background:#0755c9;color:#fff;padding:16px;position:sticky;top:0;z-index:5}
@@ -16,12 +16,12 @@ h2{font-size:19px;margin:5px 0 11px}.section{margin-top:15px}.row{display:flex;j
 .action{width:100%;padding:14px;text-align:left;background:#fff;border:1px solid #dfe5ee;border-radius:13px;font-weight:800}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;background:#fff;font:inherit}.field{margin-bottom:9px}.small{font-size:10px;color:#667085}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:7px 3px;border-bottom:1px solid #e5e9ef;text-align:right}.table th:first-child,.table td:first-child{text-align:left}
 .nat{display:flex;gap:6px;flex-wrap:wrap}.nat button{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:8px 10px;font-weight:700}.nat button.selected{background:#1557d6;color:#fff}.nat{margin-top:7px}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid #dfe5ee;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}.bottom button{border:0;background:#fff;padding:8px 2px;font-size:10px;color:#667085}.bottom button b{display:block;font-size:19px}.bottom button.active{color:#1557d6;font-weight:900}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid #dfe5ee;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}.bottom button{border:0;background:#fff;padding:8px 2px;font-size:10px;color:#667085;min-width:74px;flex:0 0 74px}.bottom button b{display:block;font-size:19px}.bottom button.active{color:#1557d6;font-weight:900}
 .toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:9px 13px;border-radius:9px;font-size:11px;display:none;z-index:20}
 </style>
 </head>
 <body><div class="app">
-<header class="header"><div class="head"><div>☰</div><div><div class="brand">CAPITAL FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
+<header class="header"><div class="head"><div>☰</div><div><div class="brand">ASIAN FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
 <main>
 
 <section id="dashboard" class="screen active">
@@ -34,15 +34,19 @@ input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;b
 <div class="card"><b>Today's Stock</b><div class="row">HSD <b id="dHsdStock">0.00 Ltr</b></div><div class="row">MS <b id="dMsStock">0.00 Ltr</b></div></div>
 </div>
 <div class="section grid2">
+<div class="card"><b>Total Revenue</b><div class="big" id="dTotalRevenue">₹0.00</div><div class="small">HSD + MS sales revenue</div></div>
+<div class="card"><b>Today's Purchase (Ltr)</b><div class="row">HSD <b id="dPurchaseHsd">0.00 Ltr</b></div><div class="row">MS <b id="dPurchaseMs">0.00 Ltr</b></div></div>
+</div>
+<div class="section grid2">
 <div class="card"><b>Nozzle Accuracy Test</b><div class="row">HSD <b id="dHsdNat">0.00 Ltr</b></div><div class="row">MS <b id="dMsNat">0.00 Ltr</b></div></div>
 <div class="card"><b>Variation</b><div class="row">HSD <b id="dHsdVar">0.00 Ltr</b></div><div class="row">MS <b id="dMsVar">0.00 Ltr</b></div></div>
 </div>
-<div class="section card"><b>Last Purchase</b><div class="row">HSD <b id="lastHsd">0.00 Ltr</b></div><div class="row">MS <b id="lastMs">0.00 Ltr</b></div><div class="row">Date <b id="lastDate">—</b></div></div>
+<div class="section card"><b>Last Purchase</b><div class="row">Date <b id="lastDate">—</b></div><div class="row">Supplier <b id="lastSupplier">—</b></div></div>
 <div class="section"><h2>Quick Actions</h2><div class="actions">
 <button class="action" onclick="go('nozzle')">⛽ Nozzle Reading</button><button class="action" onclick="go('purchase')">🚚 Stock Purchase</button>
 <button class="action" onclick="go('stock')">📊 Stock & Tank</button><button class="action" onclick="go('dip')">📏 Dip Reading</button>
 <button class="action" onclick="go('reports')">📄 Reports</button><button class="action" onclick="go('recon')">🔄 Reconciliation</button>
-<button class="action" onclick="go('alerts')">🔔 Alerts</button><button class="action" onclick="go('settings')">⚙️ Settings & Master</button>
+<button class="action" onclick="go('customers')">👥 Customers</button><button class="action" onclick="go('alerts')">🔔 Alerts</button><button class="action" onclick="go('settings')">⚙️ Settings & Master</button>
 </div></div>
 </section>
 
@@ -76,6 +80,70 @@ input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;b
 
 <section id="alerts" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Alerts</h2><div class="card"><div id="alertList">No active alerts.</div></div></section>
 
+
+<section id="customers" class="screen">
+<button class="back" onclick="go('dashboard')">← Dashboard</button>
+<div style="display:flex;justify-content:space-between;align-items:center"><h2>Customers</h2><button class="btn" style="width:auto;margin:0;padding:8px 12px" onclick="openCustomerForm()">+ Add</button></div>
+<div class="card">
+<div class="field"><input id="customerSearch" placeholder="Search name, mobile or vehicle" oninput="renderCustomers()"></div>
+<div class="grid2">
+<button class="btn" style="margin:0" onclick="setCustomerFilter('all')">All Customers</button>
+<button class="btn gray" style="margin:0" onclick="setCustomerFilter('over')">Over Limit</button>
+</div>
+<div id="customerList" class="section"></div>
+</div>
+</section>
+
+<section id="customerProfile" class="screen">
+<button class="back" onclick="go('customers')">← Customers</button>
+<div id="customerProfileBody"></div>
+</section>
+
+<section id="customerForm" class="screen">
+<button class="back" onclick="go('customers')">← Customers</button>
+<h2 id="customerFormTitle">Add Customer</h2>
+<div class="card">
+<div class="field"><div class="label">CUSTOMER NAME *</div><input id="cName"></div>
+<div class="field"><div class="label">MOBILE NUMBER</div><input id="cMobile" inputmode="numeric"></div>
+<div class="field"><div class="label">VEHICLE NUMBER</div><input id="cVehicle"></div>
+<div class="grid2"><div class="field"><div class="label">CREDIT LIMIT (₹)</div><input id="cLimit" type="number" min="0" step=".01"></div>
+<div class="field"><div class="label">OPENING BALANCE (₹)</div><input id="cOpening" type="number" min="0" step=".01"></div></div>
+<button class="btn green" onclick="saveCustomer()">Save Customer</button>
+<button class="btn red" id="deleteCustomerBtn" onclick="deleteCustomerFromForm()" style="display:none">Delete Customer</button>
+</div>
+</section>
+
+<section id="customerTxn" class="screen">
+<button class="back" onclick="go('customerProfile')">← Customer</button>
+<h2 id="txnTitle">Fuel Sale / Payment</h2>
+<div class="card">
+<div class="label">FUEL SALE</div>
+<div class="field"><div class="label">FUEL TYPE</div><select id="csFuel"><option value="h">HSD</option><option value="m">MS</option></select></div>
+<div class="grid2"><div class="field"><div class="label">QUANTITY (Ltr)</div><input id="csQty" type="number" min="0" step=".01" oninput="calcCustomerSale()"></div>
+<div class="field"><div class="label">RATE (₹/Ltr)</div><input id="csRate" type="number" min="0" step=".01" oninput="calcCustomerSale()"></div></div>
+<div class="field"><div class="label">TOTAL AMOUNT (₹)</div><input id="csTotal" readonly></div>
+<div class="field"><div class="label">PAYMENT TYPE</div><select id="csPay"><option>Credit</option><option>Cash</option><option>UPI</option><option>Card</option></select></div>
+<button class="btn green" onclick="saveCustomerSale()">Save Sale</button>
+</div>
+<div class="section card">
+<div class="label">RECEIVE PAYMENT</div>
+<div class="field"><div class="label">AMOUNT (₹)</div><input id="cpAmount" type="number" min="0" step=".01"></div>
+<div class="field"><div class="label">PAYMENT TYPE</div><select id="cpPay"><option>UPI</option><option>Cash</option><option>Card</option><option>Bank Transfer</option></select></div>
+<div class="field"><div class="label">REFERENCE / UTR</div><input id="cpRef"></div>
+<button class="btn" onclick="saveCustomerPayment()">Save Payment</button>
+</div>
+</section>
+
+<section id="customerLedger" class="screen">
+<button class="back" onclick="go('customerProfile')">← Customer</button>
+<h2>Ledger</h2><div id="customerLedgerBody"></div>
+</section>
+
+<section id="customerTxnDetail" class="screen">
+<button class="back" onclick="go('customerLedger')">← Ledger</button>
+<div id="customerTxnDetailBody"></div>
+</section>
+
 <section id="settings" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Settings & Master</h2>
 <div class="card"><b>Retail Prices</b><div class="grid2" style="margin-top:9px"><div class="field"><div class="label">HSD ₹/Ltr</div><input id="rateH" type="number" step=".01"></div><div class="field"><div class="label">MS ₹/Ltr</div><input id="rateM" type="number" step=".01"></div></div><button class="btn" onclick="saveRates()">Save Prices</button></div>
 <div class="section card"><b>Nozzle Management</b><p class="small">5 nozzles initially for each fuel. Add up to N10. Nozzle names are N1, N2, N3…</p><div class="grid2"><div class="field"><div class="label">FUEL</div><select id="addFuel"><option value="h">HSD</option><option value="m">MS</option></select></div><div class="field"><div class="label">ADD NEXT NOZZLE</div><input id="nextNozzle" disabled></div></div><button class="btn green" onclick="addNozzle()">+ Add Nozzle</button></div>
@@ -85,12 +153,13 @@ input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;b
 </section>
 
 </main>
-<nav class="bottom"><button onclick="go('dashboard',this)" class="active"><b>⌂</b>Home</button><button onclick="go('nozzle',this)"><b>⛽</b>Nozzle</button><button onclick="go('purchase',this)"><b>🚚</b>Purchase</button><button onclick="go('stock',this)"><b>📊</b>Stock</button><button onclick="go('settings',this)"><b>⚙</b>Settings</button></nav>
+<nav class="bottom"><button onclick="go('dashboard',this)" class="active"><b>⌂</b>Home</button><button onclick="go('nozzle',this)"><b>⛽</b>Nozzle</button><button onclick="go('purchase',this)"><b>🚚</b>Purchase</button><button onclick="go('stock',this)"><b>📊</b>Stock</button><button onclick="go('customers',this)"><b>👥</b>Customers</button><button onclick="go('settings',this)"><b>⚙</b>Settings</button></nav>
 <div id="toast" class="toast"></div>
 <script>
-const KEY='capitalFuelWorkingV1';
-const fresh={rate:{h:0,m:0},open:{h:0,m:0},purchase:{h:0,m:0,date:'',supplier:'',invoice:''},nat:{h:0,m:0},dip:{h:null,m:null},readings:{h:[{o:0,c:0}],m:[{o:0,c:0}]}};
+const KEY='asianFuelWorkingV2';
+const fresh={rate:{h:0,m:0},open:{h:0,m:0},purchase:{h:0,m:0,date:'',supplier:'',invoice:''},nat:{h:0,m:0},dip:{h:null,m:null},readings:{h:[{o:0,c:0},{o:0,c:0},{o:0,c:0},{o:0,c:0},{o:0,c:0}],m:[{o:0,c:0},{o:0,c:0},{o:0,c:0},{o:0,c:0},{o:0,c:0}]},customers:[],customerFilter:'all',selectedCustomer:null};
 let S=JSON.parse(localStorage.getItem(KEY)||'null')||fresh;
+['h','m'].forEach(k=>{S.readings=S.readings||{};S.readings[k]=S.readings[k]||[];while(S.readings[k].length<5)S.readings[k].push({o:0,c:0});});S.customers=S.customers||[];S.nat=S.nat||{h:0,m:0};
 function save(){localStorage.setItem(KEY,JSON.stringify(S))}
 function q(x){return Number(x||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function money(x){return '₹'+Number(x||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}
@@ -102,13 +171,13 @@ function go(id,btn){document.querySelectorAll('.screen').forEach(x=>x.classList.
 function render(){
 hsdQty.textContent=q(sale('h'))+' Ltr';msQty.textContent=q(sale('m'))+' Ltr';hsdRev.textContent=money(sale('h')*S.rate.h);msRev.textContent=money(sale('m')*S.rate.m);
 dHsdRate.textContent=money(S.rate.h)+'/Ltr';dMsRate.textContent=money(S.rate.m)+'/Ltr';dHsdStock.textContent=q(stock('h'))+' Ltr';dMsStock.textContent=q(stock('m'))+' Ltr';
-dHsdNat.textContent=q(S.nat.h)+' Ltr';dMsNat.textContent=q(S.nat.m)+' Ltr';
+dHsdNat.textContent=q(S.nat.h)+' Ltr';dMsNat.textContent=q(S.nat.m)+' Ltr';dTotalRevenue.textContent=money(sale('h')*S.rate.h+sale('m')*S.rate.m);dPurchaseHsd.textContent=q(S.purchase.h)+' Ltr';dPurchaseMs.textContent=q(S.purchase.m)+' Ltr';
 dHsdVar.textContent=q((S.dip.h==null?stock('h'):S.dip.h)-stock('h'))+' Ltr';dMsVar.textContent=q((S.dip.m==null?stock('m'):S.dip.m)-stock('m'))+' Ltr';
-lastHsd.textContent=q(S.purchase.h)+' Ltr';lastMs.textContent=q(S.purchase.m)+' Ltr';lastDate.textContent=S.purchase.date||'—';
+lastDate.textContent=S.purchase.date||'—';lastSupplier.textContent=S.purchase.supplier||'—';
 sHo.textContent=q(S.open.h);sHp.textContent=q(S.purchase.h);sHs.textContent=q(sale('h'));sHc.textContent=q(stock('h'));sMo.textContent=q(S.open.m);sMp.textContent=q(S.purchase.m);sMs.textContent=q(sale('m'));sMc.textContent=q(stock('m'));
 rHsd.textContent=q(sale('h'))+' Ltr';rMs.textContent=q(sale('m'))+' Ltr';rRev.textContent=money(sale('h')*S.rate.h+sale('m')*S.rate.m);rHs.textContent=q(stock('h'))+' Ltr';rMsStock.textContent=q(stock('m'))+' Ltr';
 rhSys.textContent=q(stock('h'));rhPhy.textContent=q(S.dip.h||0);rhVar.textContent=q((S.dip.h==null?0:S.dip.h-stock('h')))+' Ltr';rmSys.textContent=q(stock('m'));rmPhy.textContent=q(S.dip.m||0);rmVar.textContent=q((S.dip.m==null?0:S.dip.m-stock('m')))+' Ltr';
-rateH.value=S.rate.h;rateM.value=S.rate.m;openH.value=S.open.h;openM.value=S.open.m;nextNozzle.value='N'+((S.readings[addFuel.value]||[]).length+1);loadEditNozzle();renderNozzles();renderNAT();renderAlerts()
+rateH.value=S.rate.h;rateM.value=S.rate.m;openH.value=S.open.h;openM.value=S.open.m;nextNozzle.value='N'+((S.readings[addFuel.value]||[]).length+1);loadEditNozzle();renderNozzles();renderNAT();renderAlerts();if(typeof renderCustomers==='function'&&document.getElementById('customerList'))renderCustomers()
 }
 function renderNozzles(){const make=k=>{let s='';(S.readings[k]||[]).forEach((r,i)=>{s+=`<div class="card" style="margin-top:8px"><b>N${i+1}</b><div class="grid2" style="margin-top:8px"><div><div class="label">OPENING</div><input data-k="${k}" data-i="${i}" data-f="o" type="number" step=".01" value="${r.o}"></div><div><div class="label">CLOSING</div><input data-k="${k}" data-i="${i}" data-f="c" type="number" step=".01" value="${r.c}"></div></div></div>`});return s};hsdNozzles.innerHTML=make('h');msNozzles.innerHTML=make('m')}
 function natOptions(k){
@@ -145,6 +214,98 @@ if(!confirm('Reset current variation to zero for HSD and MS?'))return;
 S.dip.h=stock('h'); S.dip.m=stock('m');
 save(); toast('Variation reset to 0.00 Ltr'); render();
 }
+
+function setCustomerFilter(f){S.customerFilter=f;renderCustomers()}
+function customerBalance(c){return (+c.opening||0)+c.txns.reduce((b,t)=>b+(t.kind==='sale'&&t.payment==='Credit'?t.amount:0)-(t.kind==='payment'?t.amount:0),0)}
+function customerAvailable(c){return Math.max(0,(+c.limit||0)-customerBalance(c))}
+function customerOver(c){return customerBalance(c)>(+c.limit||0)}
+function openCustomerForm(id=null){
+S.selectedCustomer=id;
+document.getElementById('customerFormTitle').textContent=id?'Edit Customer':'Add Customer';
+const c=id?S.customers.find(x=>x.id===id):null;
+cName.value=c?.name||'';cMobile.value=c?.mobile||'';cVehicle.value=c?.vehicle||'';cLimit.value=c?.limit||0;cOpening.value=c?.opening||0;
+deleteCustomerBtn.style.display=id?'block':'none';go('customerForm');
+}
+function saveCustomer(){
+const name=cName.value.trim(); if(!name){toast('Customer name is required');return}
+if(S.selectedCustomer){
+const c=S.customers.find(x=>x.id===S.selectedCustomer); if(!c)return;
+c.name=name;c.mobile=cMobile.value.trim();c.vehicle=cVehicle.value.trim();c.limit=Math.max(0,+cLimit.value||0);
+}else{
+S.customers.push({id:Date.now(),name,mobile:cMobile.value.trim(),vehicle:cVehicle.value.trim(),limit:Math.max(0,+cLimit.value||0),opening:Math.max(0,+cOpening.value||0),txns:[]});
+}
+save();toast('Customer saved');go('customers');
+}
+function deleteCustomerFromForm(){
+if(!S.selectedCustomer)return;
+const c=S.customers.find(x=>x.id===S.selectedCustomer);
+if(!c)return;
+if(confirm('Delete '+c.name+' from the active customer list?')){S.customers=S.customers.filter(x=>x.id!==S.selectedCustomer);S.selectedCustomer=null;save();toast('Customer deleted');go('customers')}
+}
+function renderCustomers(){
+const search=(customerSearch.value||'').toLowerCase().trim();
+const list=S.customers.filter(c=>(S.customerFilter==='all'||customerOver(c)) && (!search||[c.name,c.mobile,c.vehicle].join(' ').toLowerCase().includes(search)));
+customerList.innerHTML=list.length?list.map(c=>{
+const bal=customerBalance(c),over=customerOver(c);
+return `<div class="card" style="margin-top:8px;cursor:pointer" onclick="openCustomer(${c.id})"><div style="display:flex;justify-content:space-between;gap:8px"><div><b>${esc(c.name)}</b><div class="small">${esc(c.mobile||'')} ${c.vehicle?'• '+esc(c.vehicle):''}</div></div><div style="text-align:right"><div class="small">Outstanding</div><b style="color:${bal>0?'#d92d3f':'#07883b'}">${money(bal)}</b><div class="small">${over?'Over Limit':'Within Limit'}</div></div></div></div>`
+}).join(''):'<div class="small" style="padding:12px 0">No customers found.</div>';
+}
+function openCustomer(id){S.selectedCustomer=id;renderCustomerProfile();go('customerProfile')}
+function renderCustomerProfile(){
+const c=S.customers.find(x=>x.id===S.selectedCustomer);if(!c)return;
+const bal=customerBalance(c),avail=customerAvailable(c);
+customerProfileBody.innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between"><div><h2 style="margin:0">${esc(c.name)}</h2><div class="small">${esc(c.mobile||'')} • ${esc(c.vehicle||'')}</div></div><button class="btn" style="width:auto;margin:0" onclick="openCustomerForm(${c.id})">Edit</button></div>
+<div class="grid2 section"><div class="card"><div class="small">OUTSTANDING</div><b style="color:#d92d3f">${money(bal)}</b></div><div class="card"><div class="small">CREDIT LIMIT</div><b>${money(c.limit)}</b></div></div>
+<div class="card"><div class="small">AVAILABLE CREDIT</div><b style="color:#07883b">${money(avail)}</b><div class="small">${customerOver(c)?'Over Limit':'Within Limit'}</div></div>
+<div class="actions section"><button class="action" onclick="openCustomerTxn()">⛽ Fuel Sale</button><button class="action" onclick="openCustomerTxn()">💳 Payment</button><button class="action" onclick="openCustomerLedger()">📒 Ledger</button><button class="action" onclick="openCustomerLedger()">📄 Statement</button></div>
+<div class="section"><b>Recent Activity</b>${c.txns.slice(-5).reverse().map((t,i)=>`<div class="row" onclick="openTxnDetail(${c.id},${c.txns.length-1-i})" style="cursor:pointer"><span>${esc(t.date||'—')} • ${esc(t.particular)}</span><b>${t.kind==='payment'?'-':''}${money(t.amount)}</b></div>`).join('')||'<div class="small" style="padding:10px 0">No transactions yet.</div>'}</div>
+</div>`;
+}
+function openCustomerTxn(){csQty.value='';csTotal.value='₹0.00';csRate.value=S.rate.h||0;go('customerTxn')}
+function calcCustomerSale(){csTotal.value=money((+csQty.value||0)*(+csRate.value||0))}
+function saveCustomerSale(){
+const c=S.customers.find(x=>x.id===S.selectedCustomer);if(!c)return;
+const qty=Math.max(0,+csQty.value||0),rate=Math.max(0,+csRate.value||0),amount=qty*rate;
+if(!qty||!rate){toast('Enter quantity and rate');return}
+if(csPay.value==='Credit' && amount>customerAvailable(c)){if(!confirm('This sale exceeds available credit. Continue?'))return}
+c.txns.push({id:Date.now(),date:new Date().toISOString().slice(0,10),kind:'sale',particular:(csFuel.value==='h'?'HSD':'MS')+' '+q(qty)+' Ltr',fuel:csFuel.value,quantity:qty,rate,amount,payment:csPay.value});
+save();toast('Customer sale saved');render();renderCustomerProfile();go('customerProfile');
+}
+function saveCustomerPayment(){
+const c=S.customers.find(x=>x.id===S.selectedCustomer);if(!c)return;
+const amount=Math.max(0,+cpAmount.value||0);if(!amount){toast('Enter payment amount');return}
+c.txns.push({id:Date.now(),date:new Date().toISOString().slice(0,10),kind:'payment',particular:'Payment ('+cpPay.value+')',amount,payment:cpPay.value,reference:cpRef.value.trim()});
+save();toast('Payment saved');render();renderCustomerProfile();go('customerProfile');
+}
+function openCustomerLedger(){renderCustomerLedger();go('customerLedger')}
+function renderCustomerLedger(){
+const c=S.customers.find(x=>x.id===S.selectedCustomer);if(!c)return;
+const bal=customerBalance(c),sales=c.txns.filter(t=>t.kind==='sale').reduce((a,t)=>a+t.amount,0),payments=c.txns.filter(t=>t.kind==='payment').reduce((a,t)=>a+t.amount,0);
+let running=+c.opening||0;
+const rows=c.txns.map((t,i)=>{if(t.kind==='sale'&&t.payment==='Credit')running+=t.amount;if(t.kind==='payment')running-=t.amount;return `<tr onclick="openTxnDetail(${c.id},${i})" style="cursor:pointer"><td>${esc(t.date||'')}</td><td>${esc(t.particular)}</td><td>${t.kind==='sale'&&t.payment==='Credit'?money(t.amount):'—'}</td><td>${t.kind==='payment'?money(t.amount):'—'}</td><td>${money(running)}</td></tr>`}).join('');
+customerLedgerBody.innerHTML=`<div class="card"><b>Ledger — ${esc(c.name)}</b><div style="overflow:auto;margin-top:10px"><table class="table"><thead><tr><th>Date</th><th>Particular</th><th>Debit</th><th>Credit</th><th>Balance</th></tr></thead><tbody>${rows||'<tr><td colspan="5">No transactions</td></tr>'}</tbody></table></div><div class="grid2 section"><div class="card"><div class="small">TOTAL SALES</div><b>${money(sales)}</b></div><div class="card"><div class="small">TOTAL PAYMENTS</div><b style="color:#07883b">${money(payments)}</b></div></div><div class="card"><div class="small">OUTSTANDING</div><b style="color:#d92d3f">${money(bal)}</b></div></div>`;
+}
+function openTxnDetail(cid,i){
+const c=S.customers.find(x=>x.id===cid),t=c?.txns[i];if(!t)return;
+S.selectedCustomer=cid;
+customerTxnDetailBody.innerHTML=`<div class="card"><h2>${esc(t.particular)}</h2><div class="row">Date <b>${esc(t.date||'')}</b></div><div class="row">Type <b>${esc(t.kind)}</b></div>${t.fuel?`<div class="row">Fuel <b>${t.fuel==='h'?'HSD':'MS'}</b></div>`:''}${t.quantity!=null?`<div class="row">Quantity <b>${q(t.quantity)} Ltr</b></div>`:''}${t.rate!=null?`<div class="row">Rate <b>${money(t.rate)}/Ltr</b></div>`:''}<div class="row">Amount <b>${money(t.amount)}</b></div><div class="row">Payment Type <b>${esc(t.payment||'')}</b></div>${t.reference?`<div class="row">Reference <b>${esc(t.reference)}</b></div>`:''}<button class="btn" onclick="editCustomerTxn(${i})">Edit Transaction</button><button class="btn red" onclick="deleteCustomerTxn(${i})">Delete Transaction</button></div>`;
+go('customerTxnDetail');
+}
+function editCustomerTxn(i){
+const c=S.customers.find(x=>x.id===S.selectedCustomer),t=c?.txns[i];if(!t)return;
+if(t.kind==='payment'){
+const a=prompt('Payment amount',t.amount);if(a===null)return;t.amount=Math.max(0,+a||0);const ref=prompt('Reference / UTR',t.reference||'');if(ref!==null)t.reference=ref;
+}else{
+const qv=prompt('Quantity (Ltr)',t.quantity);if(qv===null)return;const rv=prompt('Rate (₹/Ltr)',t.rate);if(rv===null)return;t.quantity=Math.max(0,+qv||0);t.rate=Math.max(0,+rv||0);t.amount=t.quantity*t.rate;t.particular=(t.fuel==='h'?'HSD':'MS')+' '+q(t.quantity)+' Ltr';
+}
+save();toast('Transaction edited');render();renderCustomerProfile();go('customerProfile');
+}
+function deleteCustomerTxn(i){
+const c=S.customers.find(x=>x.id===S.selectedCustomer);if(!c)return;
+if(confirm('Delete this customer transaction?')){c.txns.splice(i,1);save();toast('Transaction deleted');renderCustomerProfile();go('customerProfile')}
+}
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
 function renderAlerts(){let a=[];if(S.purchase.h===0&&S.purchase.m===0)a.push('No purchase recorded');if((S.readings.h||[]).some(r=>r.c<r.o)|| (S.readings.m||[]).some(r=>r.c<r.o))a.push('Check nozzle readings');alertList.innerHTML=a.length?a.map(x=>'<div class="row">⚠️ '+x+'</div>').join(''):'No active alerts.'}
 pDate.value=new Date().toISOString().slice(0,10);render()
 </script></body></html>
