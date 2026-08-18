@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Asian Filling Station</title>
+<title>Capital Filling Station</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
 .app{max-width:520px;margin:auto;min-height:100vh;background:#fff}.header{background:#0755c9;color:#fff;padding:16px;position:sticky;top:0;z-index:5}
@@ -21,7 +21,7 @@ input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;b
 </style>
 </head>
 <body><div class="app">
-<header class="header"><div class="head"><div>☰</div><div><div class="brand">ASIAN FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
+<header class="header"><div class="head"><div>☰</div><div><div class="brand">CAPITAL FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
 <main>
 
 <section id="dashboard" class="screen active">
@@ -72,7 +72,7 @@ input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;b
 
 <section id="reports" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Reports</h2><div class="card"><div class="row">HSD Sales <b id="rHsd">0.00 Ltr</b></div><div class="row">MS Sales <b id="rMs">0.00 Ltr</b></div><div class="row">Total Revenue <b id="rRev">₹0.00</b></div><div class="row">HSD Stock <b id="rHs">0.00 Ltr</b></div><div class="row">MS Stock <b id="rMsStock">0.00 Ltr</b></div></div></section>
 
-<section id="recon" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Reconciliation</h2><div class="card"><div class="row">HSD System Stock <b id="rhSys">0.00</b></div><div class="row">HSD Physical Stock <b id="rhPhy">0.00</b></div><div class="row">HSD Variation <b id="rhVar">0.00 Ltr</b></div><div class="row">MS System Stock <b id="rmSys">0.00</b></div><div class="row">MS Physical Stock <b id="rmPhy">0.00</b></div><div class="row">MS Variation <b id="rmVar">0.00 Ltr</b></div></div></section>
+<section id="recon" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Reconciliation</h2><div class="card"><div class="row">HSD System Stock <b id="rhSys">0.00</b></div><div class="row">HSD Physical Stock <b id="rhPhy">0.00</b></div><div class="row">HSD Variation <b id="rhVar">0.00 Ltr</b></div><div class="row">MS System Stock <b id="rmSys">0.00</b></div><div class="row">MS Physical Stock <b id="rmPhy">0.00</b></div><div class="row">MS Variation <b id="rmVar">0.00 Ltr</b></div><button class="btn gray" onclick="resetVariation()">Reset Variation</button><p class="small">Resetting sets the current physical/reconciliation baseline to system stock. The action does not change sales or stock and is recorded as a reset event.</p></div></section>
 
 <section id="alerts" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Alerts</h2><div class="card"><div id="alertList">No active alerts.</div></div></section>
 
@@ -88,7 +88,7 @@ input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;b
 <nav class="bottom"><button onclick="go('dashboard',this)" class="active"><b>⌂</b>Home</button><button onclick="go('nozzle',this)"><b>⛽</b>Nozzle</button><button onclick="go('purchase',this)"><b>🚚</b>Purchase</button><button onclick="go('stock',this)"><b>📊</b>Stock</button><button onclick="go('settings',this)"><b>⚙</b>Settings</button></nav>
 <div id="toast" class="toast"></div>
 <script>
-const KEY='asianFuelWorkingV1';
+const KEY='capitalFuelWorkingV1';
 const fresh={rate:{h:0,m:0},open:{h:0,m:0},purchase:{h:0,m:0,date:'',supplier:'',invoice:''},nat:{h:0,m:0},dip:{h:null,m:null},readings:{h:[{o:0,c:0}],m:[{o:0,c:0}]}};
 let S=JSON.parse(localStorage.getItem(KEY)||'null')||fresh;
 function save(){localStorage.setItem(KEY,JSON.stringify(S))}
@@ -140,6 +140,11 @@ function loadEditNozzle(){const k=editFuel.value;editNozzle.innerHTML=(S.reading
 function saveEditNozzle(){const k=editFuel.value,i=+editNozzle.value;if(!S.readings[k][i])return;S.readings[k][i].o=Math.max(0,+editOpen.value||0);S.readings[k][i].c=Math.max(0,+editClose.value||0);save();toast((k==='h'?'HSD':'MS')+' N'+(i+1)+' changed');render()}
 function editStockPrompt(){const h=prompt('HSD opening stock',S.open.h);const m=prompt('MS opening stock',S.open.m);if(h!==null)S.open.h=Math.max(0,+h||0);if(m!==null)S.open.m=Math.max(0,+m||0);save();toast('Stock updated');render()}
 function deleteLastPurchase(){if(!S.purchase.date&&!S.purchase.h&&!S.purchase.m){toast('No purchase to delete');return}if(confirm('Delete the last purchase entry?')){S.purchase={h:0,m:0,date:'',supplier:'',invoice:''};save();toast('Last purchase deleted');render()}}
+function resetVariation(){
+if(!confirm('Reset current variation to zero for HSD and MS?'))return;
+S.dip.h=stock('h'); S.dip.m=stock('m');
+save(); toast('Variation reset to 0.00 Ltr'); render();
+}
 function renderAlerts(){let a=[];if(S.purchase.h===0&&S.purchase.m===0)a.push('No purchase recorded');if((S.readings.h||[]).some(r=>r.c<r.o)|| (S.readings.m||[]).some(r=>r.c<r.o))a.push('Check nozzle readings');alertList.innerHTML=a.length?a.map(x=>'<div class="row">⚠️ '+x+'</div>').join(''):'No active alerts.'}
 pDate.value=new Date().toISOString().slice(0,10);render()
 </script></body></html>
