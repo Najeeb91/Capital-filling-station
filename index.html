@@ -1,24 +1,127 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Asian Filling Station — Corrected Master Blueprint</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Asian Filling Station</title>
 <style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f4f7fb;color:#172033;margin:0}
-main{max-width:780px;margin:auto;background:#fff;min-height:100vh;padding:22px}
-h1{color:#073fa8;margin-bottom:4px}h2{color:#123b83;margin-top:28px;border-bottom:1px solid #e3e8f0;padding-bottom:7px}
-.card{border:1px solid #e0e5ee;border-radius:14px;padding:15px;margin:11px 0}.formula{background:#eef5ff;border-radius:12px;padding:14px;font-weight:700;line-height:1.7}
-.badge{display:inline-block;padding:6px 9px;border-radius:8px;background:#eef2f7;margin:3px;font-size:12px}
-.warning{background:#fff7ed;border-left:4px solid #ef7b13;padding:11px;border-radius:8px}
-</style></head><body><main>
-<h1>ASIAN FILLING STATION</h1><b>Corrected Master Fuel Management Blueprint</b>
-<div class="card"><b>9 Main Modules</b><br>
-<span class="badge">1 Dashboard</span><span class="badge">2 Nozzle Reading</span><span class="badge">3 Stock Purchase</span>
-<span class="badge">4 Stock & Tank</span><span class="badge">5 Dip Reading</span><span class="badge">6 Reports</span>
-<span class="badge">7 Reconciliation</span><span class="badge">8 Alerts</span><span class="badge">9 Settings & Master</span></div>
-<h2>Automatic Fuel Flow</h2><div class="formula">Closing − Opening = Meter Movement<br>Meter Movement − NAT = Net Sale<br>Net Sale × Retail Price = Revenue<br>Opening Stock + Purchase − Net Sale = Closing Stock</div>
-<div class="warning"><b>Important correction:</b> NAT must not be added to stock again after using Net Sale. Adding NAT twice would double-count the tested fuel. The equivalent gross-movement formula is Opening + Purchase − Movement + NAT.</div>
-<h2>Nozzles</h2><div class="card">HSD: N1–N5 initially | MS: N1–N5 initially<br>Add up to N10 per fuel from Settings. Existing readings are editable by authorized users.</div>
-<h2>NAT</h2><div class="card">Tap: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 Ltr. NAT stays inside Nozzle Reading and is excluded from sale.</div>
-<h2>Settings & Master</h2><div class="card">1 Fuel → 2 Price → 3 Nozzles → 4 Opening Readings → 5 Tanks → 6 Dip → 7 Business → 8 Users → 9 Backup → 10 Security & Audit</div>
-<h2>Controls</h2><div class="card">Edit = authorized correction. Reset = clear unsaved form. Delete = permission-controlled, confirmed and audited; soft delete is preferred for important historical records.</div>
-<h2>Development</h2><div class="card"><b>Phase 1–10:</b> Dashboard → Nozzles → Sales/NAT → Purchase/Stock → Tank/Dip → Reconciliation → Reports/Alerts → Users/Audit → Backup/Cloud → Pilot testing.</div>
-</main></body></html>
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.app{max-width:520px;margin:auto;min-height:100vh;background:#fff}.header{background:#0755c9;color:#fff;padding:16px;position:sticky;top:0;z-index:5}
+.head{display:flex;align-items:center;justify-content:space-between}.brand{text-align:center;font-weight:900;font-size:18px}.sub{font-size:9px;text-align:center;opacity:.85}
+main{padding:13px 13px 82px}.screen{display:none}.screen.active{display:block}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.card{background:#fff;border:1px solid #dfe5ee;border-radius:15px;padding:14px}.sale{color:#fff;border:0;min-height:140px}.hsd{background:linear-gradient(145deg,#078d3c,#086f32)}.ms{background:linear-gradient(145deg,#1758da,#123db6)}
+.title{font-weight:900;font-size:16px;margin-bottom:12px}.label{font-size:9px;font-weight:800;opacity:.8;letter-spacing:.5px}.big{font-size:21px;font-weight:900;margin:3px 0 8px}.divider{height:1px;background:#ffffff40;margin:8px 0}
+h2{font-size:19px;margin:5px 0 11px}.section{margin-top:15px}.row{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #edf0f4;font-size:12px}.row:last-child{border:0}
+.btn{border:0;border-radius:10px;padding:11px 13px;background:#1557d6;color:#fff;font-weight:800;width:100%;margin-top:8px}.green{background:#07883b}.red{background:#d92d3f}.gray{background:#667085}.back{border:0;background:none;color:#1557d6;font-weight:800;padding:0 0 10px}
+.action{width:100%;padding:14px;text-align:left;background:#fff;border:1px solid #dfe5ee;border-radius:13px;font-weight:800}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+input,select{width:100%;padding:9px;border:1px solid #d7deea;border-radius:9px;background:#fff;font:inherit}.field{margin-bottom:9px}.small{font-size:10px;color:#667085}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:7px 3px;border-bottom:1px solid #e5e9ef;text-align:right}.table th:first-child,.table td:first-child{text-align:left}
+.nat{display:flex;gap:6px;flex-wrap:wrap}.nat button{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:8px 10px;font-weight:700}.nat button.selected{background:#1557d6;color:#fff}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid #dfe5ee;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}.bottom button{border:0;background:#fff;padding:8px 2px;font-size:10px;color:#667085}.bottom button b{display:block;font-size:19px}.bottom button.active{color:#1557d6;font-weight:900}
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:#172033;color:#fff;padding:9px 13px;border-radius:9px;font-size:11px;display:none;z-index:20}
+</style>
+</head>
+<body><div class="app">
+<header class="header"><div class="head"><div>☰</div><div><div class="brand">ASIAN FILLING STATION</div><div class="sub">FUEL MANAGEMENT</div></div><div>🔔</div></div></header>
+<main>
+
+<section id="dashboard" class="screen active">
+<div class="grid2">
+<div class="card sale hsd"><div class="title">HSD SALES</div><div class="label">QUANTITY</div><div class="big" id="hsdQty">0.00 Ltr</div><div class="divider"></div><div class="label">REVENUE</div><div class="big" id="hsdRev">₹0.00</div></div>
+<div class="card sale ms"><div class="title">MS SALES</div><div class="label">QUANTITY</div><div class="big" id="msQty">0.00 Ltr</div><div class="divider"></div><div class="label">REVENUE</div><div class="big" id="msRev">₹0.00</div></div>
+</div>
+<div class="section grid2">
+<div class="card"><b>Today's Price</b><div class="row">HSD <b id="dHsdRate">₹0.00/Ltr</b></div><div class="row">MS <b id="dMsRate">₹0.00/Ltr</b></div></div>
+<div class="card"><b>Today's Stock</b><div class="row">HSD <b id="dHsdStock">0.00 Ltr</b></div><div class="row">MS <b id="dMsStock">0.00 Ltr</b></div></div>
+</div>
+<div class="section grid2">
+<div class="card"><b>Nozzle Accuracy Test</b><div class="row">HSD <b id="dHsdNat">0.00 Ltr</b></div><div class="row">MS <b id="dMsNat">0.00 Ltr</b></div></div>
+<div class="card"><b>Variation</b><div class="row">HSD <b id="dHsdVar">0.00 Ltr</b></div><div class="row">MS <b id="dMsVar">0.00 Ltr</b></div></div>
+</div>
+<div class="section card"><b>Last Purchase</b><div class="row">HSD <b id="lastHsd">0.00 Ltr</b></div><div class="row">MS <b id="lastMs">0.00 Ltr</b></div><div class="row">Date <b id="lastDate">—</b></div></div>
+<div class="section"><h2>Quick Actions</h2><div class="actions">
+<button class="action" onclick="go('nozzle')">⛽ Nozzle Reading</button><button class="action" onclick="go('purchase')">🚚 Stock Purchase</button>
+<button class="action" onclick="go('stock')">📊 Stock & Tank</button><button class="action" onclick="go('dip')">📏 Dip Reading</button>
+<button class="action" onclick="go('reports')">📄 Reports</button><button class="action" onclick="go('recon')">🔄 Reconciliation</button>
+<button class="action" onclick="go('alerts')">🔔 Alerts</button><button class="action" onclick="go('settings')">⚙️ Settings & Master</button>
+</div></div>
+</section>
+
+<section id="nozzle" class="screen">
+<button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Nozzle Reading</h2>
+<div class="card"><div class="field"><div class="label">PERIOD</div><select id="period"><option>24 Hours</option><option>Morning</option><option>Evening</option><option>Night</option></select></div><div class="small">Closing − Opening = Movement. Movement − NAT = Net Sale.</div></div>
+<div class="section card"><b>HSD</b><div id="hsdNozzles"></div></div>
+<div class="section card"><b>MS</b><div id="msNozzles"></div></div>
+<div class="section card"><b>NOZZLE ACCURACY TEST (NAT)</b><p class="small">Tap a value. NAT is excluded from sale and returned to stock.</p><div class="nat" id="natButtons"></div></div>
+<button class="btn green" onclick="saveNozzle()">Save Nozzle Reading</button>
+<button class="btn gray" onclick="resetNozzleForm()">Reset Unsaved Changes</button>
+</section>
+
+<section id="purchase" class="screen">
+<button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Stock Purchase</h2>
+<div class="card"><div class="field"><div class="label">DATE</div><input id="pDate" type="date"></div><div class="field"><div class="label">HSD QUANTITY (Ltr)</div><input id="pHsd" type="number" min="0" step=".01"></div><div class="field"><div class="label">MS QUANTITY (Ltr)</div><input id="pMs" type="number" min="0" step=".01"></div><div class="field"><div class="label">SUPPLIER</div><input id="supplier"></div><div class="field"><div class="label">INVOICE / REFERENCE</div><input id="invoice"></div>
+<button class="btn green" onclick="savePurchase()">Save Purchase</button><button class="btn gray" onclick="resetPurchase()">Reset</button></div>
+</section>
+
+<section id="stock" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Stock & Tank Summary</h2><div class="card"><table class="table"><thead><tr><th>Fuel</th><th>Opening</th><th>Purchase</th><th>Net Sale</th><th>Closing</th></tr></thead><tbody><tr><td>HSD</td><td id="sHo">0</td><td id="sHp">0</td><td id="sHs">0</td><td id="sHc">0</td></tr><tr><td>MS</td><td id="sMo">0</td><td id="sMp">0</td><td id="sMs">0</td><td id="sMc">0</td></tr></tbody></table></div><button class="btn" onclick="editStockPrompt()">Edit Opening Stock</button></section>
+
+<section id="dip" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Dip Reading</h2><div class="card"><div class="field"><div class="label">FUEL / TANK</div><select id="dipFuel"><option value="h">HSD</option><option value="m">MS</option></select></div><div class="field"><div class="label">DIP / PHYSICAL STOCK (Ltr)</div><input id="dipQty" type="number" min="0" step=".01"></div><div class="field"><div class="label">REMARKS</div><input id="dipRemark"></div><button class="btn green" onclick="saveDip()">Save Dip</button><button class="btn gray" onclick="resetDip()">Reset</button></div></section>
+
+<section id="reports" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Reports</h2><div class="card"><div class="row">HSD Sales <b id="rHsd">0.00 Ltr</b></div><div class="row">MS Sales <b id="rMs">0.00 Ltr</b></div><div class="row">Total Revenue <b id="rRev">₹0.00</b></div><div class="row">HSD Stock <b id="rHs">0.00 Ltr</b></div><div class="row">MS Stock <b id="rMsStock">0.00 Ltr</b></div></div></section>
+
+<section id="recon" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Reconciliation</h2><div class="card"><div class="row">HSD System Stock <b id="rhSys">0.00</b></div><div class="row">HSD Physical Stock <b id="rhPhy">0.00</b></div><div class="row">HSD Variation <b id="rhVar">0.00 Ltr</b></div><div class="row">MS System Stock <b id="rmSys">0.00</b></div><div class="row">MS Physical Stock <b id="rmPhy">0.00</b></div><div class="row">MS Variation <b id="rmVar">0.00 Ltr</b></div></div></section>
+
+<section id="alerts" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Alerts</h2><div class="card"><div id="alertList">No active alerts.</div></div></section>
+
+<section id="settings" class="screen"><button class="back" onclick="go('dashboard')">← Dashboard</button><h2>Settings & Master</h2>
+<div class="card"><b>Retail Prices</b><div class="grid2" style="margin-top:9px"><div class="field"><div class="label">HSD ₹/Ltr</div><input id="rateH" type="number" step=".01"></div><div class="field"><div class="label">MS ₹/Ltr</div><input id="rateM" type="number" step=".01"></div></div><button class="btn" onclick="saveRates()">Save Prices</button></div>
+<div class="section card"><b>Nozzle Management</b><p class="small">5 nozzles initially for each fuel. Add up to N10. Nozzle names are N1, N2, N3…</p><div class="grid2"><div class="field"><div class="label">FUEL</div><select id="addFuel"><option value="h">HSD</option><option value="m">MS</option></select></div><div class="field"><div class="label">ADD NEXT NOZZLE</div><input id="nextNozzle" disabled></div></div><button class="btn green" onclick="addNozzle()">+ Add Nozzle</button></div>
+<div class="section card"><b>Change Existing Nozzle Reading</b><div class="grid2"><div class="field"><div class="label">FUEL</div><select id="editFuel" onchange="loadEditNozzle()"><option value="h">HSD</option><option value="m">MS</option></select></div><div class="field"><div class="label">NOZZLE</div><select id="editNozzle" onchange="loadEditNozzle()"></select></div></div><div class="grid2"><div class="field"><div class="label">OPENING</div><input id="editOpen" type="number" step=".01"></div><div class="field"><div class="label">CLOSING</div><input id="editClose" type="number" step=".01"></div></div><button class="btn" onclick="saveEditNozzle()">Save Changed Reading</button></div>
+<div class="section card"><b>Opening Stock</b><div class="grid2"><div class="field"><div class="label">HSD</div><input id="openH" type="number" step=".01"></div><div class="field"><div class="label">MS</div><input id="openM" type="number" step=".01"></div></div><button class="btn" onclick="saveOpening()">Save Stock</button></div>
+<div class="section card"><b>Edit / Reset / Delete</b><p class="small">Edit and Reset are available on entry screens. Delete is confirmation-controlled and should be used only by authorized users; important history remains auditable.</p><button class="btn red" onclick="deleteLastPurchase()">Delete Last Purchase</button></div>
+</section>
+
+</main>
+<nav class="bottom"><button onclick="go('dashboard',this)" class="active"><b>⌂</b>Home</button><button onclick="go('nozzle',this)"><b>⛽</b>Nozzle</button><button onclick="go('purchase',this)"><b>🚚</b>Purchase</button><button onclick="go('stock',this)"><b>📊</b>Stock</button><button onclick="go('settings',this)"><b>⚙</b>Settings</button></nav>
+<div id="toast" class="toast"></div>
+<script>
+const KEY='asianFuelWorkingV1';
+const fresh={rate:{h:0,m:0},open:{h:0,m:0},purchase:{h:0,m:0,date:'',supplier:'',invoice:''},nat:{h:0,m:0},dip:{h:null,m:null},readings:{h:[{o:0,c:0}],m:[{o:0,c:0}]}};
+let S=JSON.parse(localStorage.getItem(KEY)||'null')||fresh;
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function q(x){return Number(x||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function money(x){return '₹'+Number(x||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function movement(k){return (S.readings[k]||[]).reduce((a,r)=>a+Math.max(0,(+r.c||0)- (+r.o||0)),0)}
+function sale(k){return Math.max(0,movement(k)-(+S.nat[k]||0))}
+function stock(k){return (+S.open[k]||0)+(+S.purchase[k]||0)-sale(k)}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1600)}
+function go(id,btn){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');render()}
+function render(){
+hsdQty.textContent=q(sale('h'))+' Ltr';msQty.textContent=q(sale('m'))+' Ltr';hsdRev.textContent=money(sale('h')*S.rate.h);msRev.textContent=money(sale('m')*S.rate.m);
+dHsdRate.textContent=money(S.rate.h)+'/Ltr';dMsRate.textContent=money(S.rate.m)+'/Ltr';dHsdStock.textContent=q(stock('h'))+' Ltr';dMsStock.textContent=q(stock('m'))+' Ltr';
+dHsdNat.textContent=q(S.nat.h)+' Ltr';dMsNat.textContent=q(S.nat.m)+' Ltr';
+dHsdVar.textContent=q((S.dip.h==null?stock('h'):S.dip.h)-stock('h'))+' Ltr';dMsVar.textContent=q((S.dip.m==null?stock('m'):S.dip.m)-stock('m'))+' Ltr';
+lastHsd.textContent=q(S.purchase.h)+' Ltr';lastMs.textContent=q(S.purchase.m)+' Ltr';lastDate.textContent=S.purchase.date||'—';
+sHo.textContent=q(S.open.h);sHp.textContent=q(S.purchase.h);sHs.textContent=q(sale('h'));sHc.textContent=q(stock('h'));sMo.textContent=q(S.open.m);sMp.textContent=q(S.purchase.m);sMs.textContent=q(sale('m'));sMc.textContent=q(stock('m'));
+rHsd.textContent=q(sale('h'))+' Ltr';rMs.textContent=q(sale('m'))+' Ltr';rRev.textContent=money(sale('h')*S.rate.h+sale('m')*S.rate.m);rHs.textContent=q(stock('h'))+' Ltr';rMsStock.textContent=q(stock('m'))+' Ltr';
+rhSys.textContent=q(stock('h'));rhPhy.textContent=q(S.dip.h||0);rhVar.textContent=q((S.dip.h==null?0:S.dip.h-stock('h')))+' Ltr';rmSys.textContent=q(stock('m'));rmPhy.textContent=q(S.dip.m||0);rmVar.textContent=q((S.dip.m==null?0:S.dip.m-stock('m')))+' Ltr';
+rateH.value=S.rate.h;rateM.value=S.rate.m;openH.value=S.open.h;openM.value=S.open.m;nextNozzle.value='N'+((S.readings[addFuel.value]||[]).length+1);loadEditNozzle();renderNozzles();renderNAT();renderAlerts()
+}
+function renderNozzles(){const make=k=>{let s='';(S.readings[k]||[]).forEach((r,i)=>{s+=`<div class="card" style="margin-top:8px"><b>N${i+1}</b><div class="grid2" style="margin-top:8px"><div><div class="label">OPENING</div><input data-k="${k}" data-i="${i}" data-f="o" type="number" step=".01" value="${r.o}"></div><div><div class="label">CLOSING</div><input data-k="${k}" data-i="${i}" data-f="c" type="number" step=".01" value="${r.c}"></div></div></div>`});return s};hsdNozzles.innerHTML=make('h');msNozzles.innerHTML=make('m')}
+function renderNAT(){natButtons.innerHTML=[5,10,15,20,25,30,35,40,45,50].map(v=>`<button class="${S.nat.h===v?'selected':''}" onclick="setNat(${v})">${v} L</button>`).join('')}
+function setNat(v){const k=editFuel.value;S.nat[k]=v;save();toast((k==='h'?'HSD':'MS')+' NAT '+v+' L');render()}
+function saveNozzle(){document.querySelectorAll('#nozzle input[data-k]').forEach(e=>{S.readings[e.dataset.k][+e.dataset.i][e.dataset.f]=Math.max(0,+e.value||0)});save();toast('Nozzle readings saved');render()}
+function resetNozzleForm(){render();toast('Unsaved nozzle changes reset')}
+function savePurchase(){S.purchase.h=Math.max(0,+pHsd.value||0);S.purchase.m=Math.max(0,+pMs.value||0);S.purchase.date=pDate.value;S.purchase.supplier=supplier.value;S.purchase.invoice=invoice.value;save();toast('Purchase saved');render()}
+function resetPurchase(){pHsd.value=0;pMs.value=0;supplier.value='';invoice.value='';toast('Purchase form reset')}
+function saveDip(){S.dip[dipFuel.value]=Math.max(0,+dipQty.value||0);save();toast('Dip saved');render()}
+function resetDip(){dipQty.value='';dipRemark.value='';toast('Dip form reset')}
+function saveRates(){S.rate.h=Math.max(0,+rateH.value||0);S.rate.m=Math.max(0,+rateM.value||0);save();toast('Prices saved');render()}
+function saveOpening(){S.open.h=Math.max(0,+openH.value||0);S.open.m=Math.max(0,+openM.value||0);save();toast('Opening stock saved');render()}
+function addNozzle(){const k=addFuel.value;if(S.readings[k].length>=10){toast('Maximum N10 reached');return}S.readings[k].push({o:0,c:0});save();toast((k==='h'?'HSD':'MS')+' N'+S.readings[k].length+' added');render()}
+function loadEditNozzle(){const k=editFuel.value;editNozzle.innerHTML=(S.readings[k]||[]).map((r,i)=>`<option value="${i}">N${i+1}</option>`).join('');const i=+(editNozzle.value||0),r=S.readings[k][i];if(r){editOpen.value=r.o;editClose.value=r.c}}
+function saveEditNozzle(){const k=editFuel.value,i=+editNozzle.value;if(!S.readings[k][i])return;S.readings[k][i].o=Math.max(0,+editOpen.value||0);S.readings[k][i].c=Math.max(0,+editClose.value||0);save();toast((k==='h'?'HSD':'MS')+' N'+(i+1)+' changed');render()}
+function editStockPrompt(){const h=prompt('HSD opening stock',S.open.h);const m=prompt('MS opening stock',S.open.m);if(h!==null)S.open.h=Math.max(0,+h||0);if(m!==null)S.open.m=Math.max(0,+m||0);save();toast('Stock updated');render()}
+function deleteLastPurchase(){if(!S.purchase.date&&!S.purchase.h&&!S.purchase.m){toast('No purchase to delete');return}if(confirm('Delete the last purchase entry?')){S.purchase={h:0,m:0,date:'',supplier:'',invoice:''};save();toast('Last purchase deleted');render()}}
+function renderAlerts(){let a=[];if(S.purchase.h===0&&S.purchase.m===0)a.push('No purchase recorded');if((S.readings.h||[]).some(r=>r.c<r.o)|| (S.readings.m||[]).some(r=>r.c<r.o))a.push('Check nozzle readings');alertList.innerHTML=a.length?a.map(x=>'<div class="row">⚠️ '+x+'</div>').join(''):'No active alerts.'}
+pDate.value=new Date().toISOString().slice(0,10);render()
+</script></body></html>
